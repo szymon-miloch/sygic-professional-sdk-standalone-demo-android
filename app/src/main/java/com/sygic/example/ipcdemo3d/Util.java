@@ -18,11 +18,6 @@ class Util {
     
         return false;
     }
-    
-    // zisti, ci js SD karta namountovana
-    public static boolean isSDCardPresent() {
-        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-    }
 
     // zisti cestu k SD karte
     public static String[] getSDCardPath(final String[] path) {
