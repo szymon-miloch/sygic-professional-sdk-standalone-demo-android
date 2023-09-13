@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:baselineAligned="false">
+
+    <EditText
+            android:id="@+id/et1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:ems="10"/>
+
+    <EditText
+            android:id="@+id/et2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:ems="10"
+            android:inputType="text"/>
+    <EditText
+            android:id="@+id/et3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:inputType="text"
+            android:ems="10">
+    </EditText>
+
+    <EditText
+            android:id="@+id/et4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:inputType="numberSigned"
+            android:ems="10"/>
+
+    <EditText
+            android:id="@+id/et5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:inputType="numberSigned"
+            android:ems="10"/>
+
+    <EditText
+            android:id="@+id/et6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:inputType="numberSigned"
+            android:ems="10"/>
+
+    <Spinner
+            android:id="@+id/spin1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:entries="@array/point_type"/>
+
+    <Spinner
+            android:id="@+id/spin2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:entries="@array/bool"/>
+
+    <Spinner
+            android:id="@+id/spin3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"
+            android:entries="@array/bool"/>
+
+    <Spinner
+            android:id="@+id/spin4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="8dp"/>
+
+    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="16dp">
+
+        <Button android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Add point"
+                android:id="@+id/btn_add">
+        </Button>
+
+        <Button android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Cancel"
+                android:id="@+id/btn_cancel">
+        </Button>
+    </RelativeLayout>
+</LinearLayout>

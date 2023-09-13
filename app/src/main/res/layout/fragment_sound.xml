@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/b_play_tts"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play TTS" />
+
+    <EditText
+        android:id="@+id/et_add_tts_text"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="add tts text"
+        android:ems="10" >
+    </EditText>
+    
+    <TextView
+        android:id="@+id/tv_help"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sound_tts_help"
+        android:ems="10" >
+    </TextView>
+
+</LinearLayout>

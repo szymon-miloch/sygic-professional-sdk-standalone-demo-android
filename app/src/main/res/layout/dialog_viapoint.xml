@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rlStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp" >
+
+        <EditText
+            android:id="@+id/etLongStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:hint="Longitude"
+            android:maxLength="9"
+            android:ems="10"
+            android:inputType="numberSigned" >
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/etLatStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@+id/etLongStart"
+            android:layout_below="@+id/etLongStart"
+            android:hint="Latitude"
+            android:maxLength="9"
+            android:ems="10"
+            android:inputType="numberSigned" />
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/cbVisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Visible" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+	    <Button
+	        android:id="@+id/btn_add_via_ok"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="OK" />
+	
+	    <Button
+	        android:id="@+id/btn_add_via_cancel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="Cancel" />
+    </LinearLayout>
+
+</LinearLayout>
