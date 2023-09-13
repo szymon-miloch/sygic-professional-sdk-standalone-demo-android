@@ -11,13 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
-import com.sygic.sdk.remoteapi.ApiItinerary;
 import com.sygic.sdk.remoteapi.ApiNavigation;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.sdk.remoteapi.model.RouteInfo;
-import com.sygic.sdk.remoteapi.model.StopOffPoint;
-
-import java.util.ArrayList;
 
 /**
  * show the info about current route
@@ -25,8 +21,6 @@ import java.util.ArrayList;
 public class RouteInfoFragment extends Fragment {
     private View mRoot;
     private Handler mHandler;
-    private ArrayList<StopOffPoint> mRoute;
-    private int mWpIndex;
 
     public RouteInfoFragment() {
     }
@@ -72,41 +66,11 @@ public class RouteInfoFragment extends Fragment {
         mHandler.removeCallbacks(refresh);
     }
 
-    Runnable refresh = new Runnable() {
-        @Override
-        public void run() {
-            refresh();
-        }
-    };
+    Runnable refresh = this::refresh;
 
     private void refresh() {
         getRouteInfo();
         mHandler.postDelayed(refresh, 2000);
-    }
-
-    /**
-     * retrieve the current route and find first unvisited point
-     *
-     * @return current StopOffPoint from the loaded route
-     */
-    private StopOffPoint getCurrent() {
-        mWpIndex = -1;
-        try {
-            mRoute = ApiItinerary.getItineraryList("default", SdkApplication.MAX);
-        } catch (GeneralException e) {
-            e.printStackTrace();
-        }
-        StopOffPoint current = new StopOffPoint();
-        if (mRoute != null) {
-            for (StopOffPoint aMRoute : mRoute) {
-                current = aMRoute;
-                if (!current.isVisited()) {
-                    break;
-                }
-                mWpIndex++;
-            }
-        }
-        return current;
     }
 
 
@@ -135,8 +99,6 @@ public class RouteInfoFragment extends Fragment {
     }
 
     private void fillInfo(RouteInfo info) {
-        String str;
-
         TextView tv = (TextView) mRoot.findViewById(R.id.tv1);
         tv.setText(info.getTotalDistance() + " m");
 

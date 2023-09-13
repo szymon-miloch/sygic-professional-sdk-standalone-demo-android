@@ -26,10 +26,6 @@ public class MenuListFragment extends ListFragment {
     private boolean mEnabled = false;
     private ChangeStateMenuReceiver mChangeReceiver;
 
-    protected static class ViewHolder {
-        TextView tvItem;
-    }
-
     /**
      * callback for the selected item
      */
@@ -37,10 +33,7 @@ public class MenuListFragment extends ListFragment {
         void onItemSelected(int id);
     }
 
-    private static final Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(int id) {
-        }
+    private static final Callbacks sDummyCallbacks = id -> {
     };
 
     public MenuListFragment() {

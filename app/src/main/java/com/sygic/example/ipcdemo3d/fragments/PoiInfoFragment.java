@@ -35,15 +35,12 @@ public class PoiInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_poi_info, container, false);
-        view.findViewById(R.id.btn_show).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mPoi != null) {
-                    try {
-                        ApiMaps.showCoordinatesOnMap(mPoi.getLocation(), SdkApplication.ZOOM, SdkApplication.MAX);
-                    } catch (GeneralException e) {
-                        e.printStackTrace();
-                    }
+        view.findViewById(R.id.btn_show).setOnClickListener(view1 -> {
+            if (mPoi != null) {
+                try {
+                    ApiMaps.showCoordinatesOnMap(mPoi.getLocation(), SdkApplication.ZOOM, SdkApplication.MAX);
+                } catch (GeneralException e) {
+                    e.printStackTrace();
                 }
             }
         });

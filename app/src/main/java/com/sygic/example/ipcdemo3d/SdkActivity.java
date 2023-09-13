@@ -1,6 +1,5 @@
 package com.sygic.example.ipcdemo3d;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -43,17 +41,14 @@ import java.util.HashMap;
  */
 public class SdkActivity extends FragmentActivity implements ActivityResolver {
 
-    private static final String LOG_TAG = SdkActivity.class.getCanonicalName();
     private static final int ITIN_MENU_INDEX = 4;
     public static int tabId = 0;
 
-    private IntentFilter mFilter;
     private ActivityReceiver mReceiver;
     private Handler mHandler;
-    private HashMap<Integer, String> mEvents = new HashMap<Integer, String>();
+    private final HashMap<Integer, String> mEvents = new HashMap<>();
     private boolean mReconnect = false;
     private String[] sMenu;
-    private TabManager mTabManager;
     private TabHost mTabHost;
     private ApiCallback mApiCallback;
     private SygicSoundListener mSoundListener;
@@ -81,7 +76,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         }
 
         // we create a intent filter we can use with our receiver
-        mFilter = new IntentFilter();
+        IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(SdkApplication.INTENT_ACTION_GPS_CLOSED);
         mFilter.addAction(SdkApplication.INTENT_ACTION_SERVICE_DESTROYED);
         mFilter.addAction(SdkApplication.INTENT_ACTION_NO_DRIVE);
@@ -140,7 +135,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
     /**
      * Check if Truck navigation is running;
      *
-     * @param    timeOut    Timeout in milliseconds to wait for getting result
+     * @param timeOut Timeout in milliseconds to wait for getting result
      * @return true if application is running
      */
     @Override
@@ -173,17 +168,14 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
     /**
      * Enable/Disable tabs;
      *
-     * @param    enabled        enabled/disabled state for tabs 1..n
+     * @param enabled enabled/disabled state for tabs 1..n
      */
-    @SuppressLint("NewApi")
     @Override
     public void setTabsState(boolean enabled) {
         int tabsCount = mTabHost.getTabWidget().getChildCount();
         for (int i = 1; i < tabsCount; i++) {
             mTabHost.getTabWidget().getChildTabViewAt(i).setEnabled(enabled);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                mTabHost.getTabWidget().getChildTabViewAt(i).setAlpha(enabled ? 1 : 0.5f);
-            }
+            mTabHost.getTabWidget().getChildTabViewAt(i).setAlpha(enabled ? 1 : 0.5f);
             mTabHost.getTabWidget().getChildTabViewAt(i);
         }
     }
@@ -201,7 +193,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup();
 
-        mTabManager = new TabManager(this, mTabHost, R.id.realtabcontent);
+        TabManager mTabManager = new TabManager(this, mTabHost, R.id.realtabcontent);
 
         int n = 0;
         mTabManager.addTab(mTabHost.newTabSpec(sMenu[n]).setIndicator(sMenu[n++]),
@@ -229,7 +221,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         private final FragmentActivity mActivity;
         private final TabHost mTabHost;
         private final int mContainerId;
-        private final HashMap<String, TabInfo> mTabs = new HashMap<String, TabInfo>();
+        private final HashMap<String, TabInfo> mTabs = new HashMap<>();
         TabInfo mLastTab;
 
         static final class TabInfo {
@@ -349,19 +341,6 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         f.addItin(startLon, startLat, stopLon, stopLat);
     }
 
-
-    public boolean isPackageExisted(String targetPackage) {
-        List<ApplicationInfo> packages;
-        PackageManager pm;
-        pm = getPackageManager();
-        packages = pm.getInstalledApplications(0);
-        for (ApplicationInfo packageInfo : packages) {
-            if (packageInfo.packageName.equals(targetPackage)) return true;
-        }
-        return false;
-    }
-
-
     public ApiCallback getApiCallback() {
         return mApiCallback;
     }
@@ -374,7 +353,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         AlarmManager am = (AlarmManager) (getSystemService(Context.ALARM_SERVICE));
         Intent amIntent = new Intent(this, StateChangeReceiver.class);
         amIntent.setAction(SdkApplication.INTENT_ACTION_AM_WAKEUP);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, amIntent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, amIntent, PendingIntent.FLAG_IMMUTABLE);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + millis, pi);
     }
 
@@ -421,13 +400,10 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
                     break;
             }
             if (show)
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String str = mEvents.get(event);
-                        str += data != null ? " " + data : "";
-                        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-                    }
+                mHandler.post(() -> {
+                    String str = mEvents.get(event);
+                    str += data != null ? " " + data : "";
+                    Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
                 });
         }
 

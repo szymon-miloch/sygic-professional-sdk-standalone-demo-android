@@ -29,23 +29,19 @@ public class SearchFragment extends Fragment {
 
         tvResults = (TextView) mView.findViewById(R.id.tvSearchResults);
 
-        mView.findViewById(R.id.btnSearch).setOnClickListener(new View.OnClickListener() {
+        mView.findViewById(R.id.btnSearch).setOnClickListener(arg0 -> {
+            tvResults.setText("");
 
-            @Override
-            public void onClick(View arg0) {
-                tvResults.setText("");
-
-                EditText edit = (EditText) mView.findViewById(R.id.editSearchText);
-                String searchText = edit.getText().toString();
-                boolean result = false;
-                try {
-                    result = ApiLocation.searchLocation(searchText, mOnSearchListener, 0);
-                } catch (GeneralException e) {
-                    e.printStackTrace();
-                }
-                if (!result) {
-                    tvResults.setText("Search failed");
-                }
+            EditText edit = (EditText) mView.findViewById(R.id.editSearchText);
+            String searchText = edit.getText().toString();
+            boolean result = false;
+            try {
+                result = ApiLocation.searchLocation(searchText, mOnSearchListener, 0);
+            } catch (GeneralException e) {
+                e.printStackTrace();
+            }
+            if (!result) {
+                tvResults.setText("Search failed");
             }
         });
 
@@ -70,13 +66,7 @@ public class SearchFragment extends Fragment {
 
                 final String strRes = sb.toString();
 
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tvResults.setText(strRes);
-                    }
-                });
+                getActivity().runOnUiThread(() -> tvResults.setText(strRes));
             }
         }
     };

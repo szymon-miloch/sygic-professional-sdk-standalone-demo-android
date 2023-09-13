@@ -4,12 +4,19 @@ package com.sygic.example.ipcdemo3d;
 import com.sygic.sdk.remoteapi.ApiCallback;
 
 public interface ActivityResolver {
-	public boolean isAppStarted(int timeOut);
-	public boolean isServiceConnected();
-	public void setTabsState(boolean enabled);
-	public void addItin(int startLon, int startLat, int stopLon, int stopLat);
-	public void addVisibleViapoint(int startLon, int startLat);
-	public void addInvisibleViapoint(int viaLon, int viaLat);
-	public void bringToBackg(long millis);
-	public ApiCallback getApiCallback();
+    boolean isAppStarted(int timeOut);
+
+    boolean isServiceConnected();
+
+    void setTabsState(boolean enabled);
+
+    void addItin(int startLon, int startLat, int stopLon, int stopLat);
+
+    void addVisibleViapoint(int startLon, int startLat);
+
+    void addInvisibleViapoint(int viaLon, int viaLat);
+
+    void bringToBackg(long millis);
+
+    ApiCallback getApiCallback();
 }

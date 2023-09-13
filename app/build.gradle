@@ -31,7 +31,7 @@ android {
             localProp.load(project.rootProject.file('local.properties').newDataInputStream())
             def keystoreSett = localProp.getProperty('keystore.settings', null)
             if (keystoreSett != null) {
-                File signFile = file(keystoreSett);
+                File signFile = file(keystoreSett)
                 if (signFile.exists()) {
                     Properties properties = new Properties()
                     properties.load(signFile.newDataInputStream())
@@ -40,12 +40,10 @@ android {
                     storePassword properties.getProperty('key.store.password', null)
                     keyAlias properties.getProperty('key.alias', null)
                     keyPassword properties.getProperty('key.alias.password', null)
-                }
-                else {
+                } else {
                     logger.warn("File " + signFile + " does not exist. App will not be signed.")
                 }
-            }
-            else {
+            } else {
                 logger.warn("keystore.settings file not defined in local.properties. App will not be signed.")
             }
         } // release

@@ -1,13 +1,11 @@
 package com.sygic.example.ipcdemo3d.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.sygic.example.ipcdemo3d.ActivityResolver;
 import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiItinerary;
@@ -32,25 +29,16 @@ import java.util.List;
  * shows available itineraries
  */
 public class ItinFragment extends Fragment {
-    private ActivityResolver mActivity;
-    private ListView mList;
     private ArrayAdapter<String> mListAdapter;
-    private ArrayList<StopOffPoint> mItinerary;
     private Spinner mSpin;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         int pos;
         TextView tvItem;
         Button btnDel;
     }
 
     public ItinFragment() {
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (ActivityResolver) activity;
     }
 
     /**
@@ -80,52 +68,39 @@ public class ItinFragment extends Fragment {
      */
     private void registerButtons(View rootView) {
         Button btnAccept = (Button) rootView.findViewById(R.id.btn_accept);
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    //if 2d navigation the name must be without .itf extension
-                    ApiItinerary.setRoute("test1", 0, SdkApplication.MAX * 2);
-                } catch (NavigationException e) {
-                    Toast.makeText(getActivity(), "No itinerary added!", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+        btnAccept.setOnClickListener(view -> {
+            try {
+                //if 2d navigation the name must be without .itf extension
+                ApiItinerary.setRoute("test1", 0, SdkApplication.MAX * 2);
+            } catch (NavigationException e) {
+                Toast.makeText(getActivity(), "No itinerary added!", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         });
         Button btnAdd = (Button) rootView.findViewById(R.id.btn_add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                int[] coords = {sharedPref.getInt("itinStartLon", 0), sharedPref.getInt("itinStartLat", 0), sharedPref.getInt("itinStopLon", 0), sharedPref.getInt("itinStopLat", 0)};
-                SetItineraryDialog itinDlg = SetItineraryDialog.newInstance("set itinerary test1 start/stop", coords);
-                itinDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
-            }
+        btnAdd.setOnClickListener(view -> {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int[] coords = {sharedPref.getInt("itinStartLon", 0), sharedPref.getInt("itinStartLat", 0), sharedPref.getInt("itinStopLon", 0), sharedPref.getInt("itinStopLat", 0)};
+            SetItineraryDialog itinDlg = SetItineraryDialog.newInstance("set itinerary test1 start/stop", coords);
+            itinDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
         });
         Button btnDel = (Button) rootView.findViewById(R.id.btn_del);
-        btnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    ApiItinerary.deleteItinerary("test1", SdkApplication.MAX);
-                } catch (GeneralException e) {
-                    Toast.makeText(getActivity(), "No itinerary added!", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                refreshList("test1");
+        btnDel.setOnClickListener(view -> {
+            try {
+                ApiItinerary.deleteItinerary("test1", SdkApplication.MAX);
+            } catch (GeneralException e) {
+                Toast.makeText(getActivity(), "No itinerary added!", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
+            refreshList("test1");
         });
 
         Button btnAddEntry = (Button) rootView.findViewById(R.id.btn_add_entry);
-        btnAddEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                int[] coords = {sharedPref.getInt("itinViaLon", 0), sharedPref.getInt("itinViaLat", 0)};
-                SetViapointDialog earthDlg = SetViapointDialog.newInstance("set waypoint", coords);
-                earthDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
-            }
-
+        btnAddEntry.setOnClickListener(view -> {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int[] coords = {sharedPref.getInt("itinViaLon", 0), sharedPref.getInt("itinViaLat", 0)};
+            SetViapointDialog earthDlg = SetViapointDialog.newInstance("set waypoint", coords);
+            earthDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
         });
     }
 
@@ -139,7 +114,7 @@ public class ItinFragment extends Fragment {
      * @param stopLat  itinerary stop latitude
      */
     public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
-        ArrayList<StopOffPoint> list = new ArrayList<StopOffPoint>();
+        ArrayList<StopOffPoint> list = new ArrayList<>();
         list.add(new StopOffPoint(false, false, StopOffPoint.PointType.START, startLon, startLat, -1, 0, "", "", ""));
         list.add(new StopOffPoint(false, false, StopOffPoint.PointType.FINISH, stopLon, stopLat, -1, 0, "", "", ""));
         try {
@@ -191,21 +166,18 @@ public class ItinFragment extends Fragment {
      * @param rootView
      */
     private void registerListView(View rootView) {
-        ArrayList<String> arrStr = new ArrayList<String>();
+        ArrayList<String> arrStr = new ArrayList<>();
         mListAdapter = new ItinAdapter(getActivity(), arrStr);
-        mList = (ListView) rootView.findViewById(R.id.itin_list);
+        ListView mList = (ListView) rootView.findViewById(R.id.itin_list);
         mList.setAdapter(mListAdapter);
-        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Fragment f = new PointInfoFragment();
-                Bundle b = new Bundle();
-                b.putInt("position", i);
-                b.putString("name", (String) mSpin.getSelectedItem());
-                f.setArguments(b);
-                getFragmentManager().beginTransaction().add(ItinFragment.this.getId(), f)
-                        .addToBackStack(null).hide(ItinFragment.this).commit();
-            }
+        mList.setOnItemClickListener((adapterView, view, i, l) -> {
+            Fragment f = new PointInfoFragment();
+            Bundle b = new Bundle();
+            b.putInt("position", i);
+            b.putString("name", (String) mSpin.getSelectedItem());
+            f.setArguments(b);
+            getFragmentManager().beginTransaction().add(ItinFragment.this.getId(), f)
+                    .addToBackStack(null).hide(ItinFragment.this).commit();
         });
         refreshList("test1");
 
@@ -220,7 +192,7 @@ public class ItinFragment extends Fragment {
     private void refreshList(String name) {
         mListAdapter.clear();
         try {
-            mItinerary = ApiItinerary.getItineraryList(name, SdkApplication.MAX);
+            ArrayList<StopOffPoint> mItinerary = ApiItinerary.getItineraryList(name, SdkApplication.MAX);
             if (mItinerary != null) {
                 for (StopOffPoint p : mItinerary) {
                     String str = (p.getCaption() != null || p.getCaption() != "") ? p.getCaption() : p.getAddress();
@@ -231,18 +203,6 @@ public class ItinFragment extends Fragment {
             e.printStackTrace();
         }
 
-        mListAdapter.notifyDataSetChanged();
-    }
-
-
-    public void removeEntry(View v) {
-        ViewHolder holder = (ViewHolder) v.getTag();
-        try {
-            ApiItinerary.deleteEntryInItinerary("test1", holder.pos, SdkApplication.MAX);
-        } catch (GeneralException e) {
-            e.printStackTrace();
-        }
-        mListAdapter.remove((String) holder.tvItem.getText());
         mListAdapter.notifyDataSetChanged();
     }
 
@@ -270,12 +230,7 @@ public class ItinFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.itin_list_item, null);
                 holder.tvItem = (TextView) convertView.findViewById(R.id.tv_item);
                 holder.btnDel = (Button) convertView.findViewById(R.id.btn_del);
-                holder.btnDel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        removeEntry(view);
-                    }
-                });
+                holder.btnDel.setOnClickListener(this::removeEntry);
                 holder.btnDel.setTag(holder);
                 convertView.setTag(holder);
             } else {
@@ -290,6 +245,17 @@ public class ItinFragment extends Fragment {
             }
 
             return convertView;
+        }
+
+        public void removeEntry(View v) {
+            ViewHolder holder = (ViewHolder) v.getTag();
+            try {
+                ApiItinerary.deleteEntryInItinerary("test1", holder.pos, SdkApplication.MAX);
+            } catch (GeneralException e) {
+                e.printStackTrace();
+            }
+            mListAdapter.remove((String) holder.tvItem.getText());
+            mListAdapter.notifyDataSetChanged();
         }
     }
 }

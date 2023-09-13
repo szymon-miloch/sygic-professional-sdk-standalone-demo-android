@@ -20,7 +20,6 @@ import com.sygic.sdk.remoteapi.ApiLocation;
 import com.sygic.sdk.remoteapi.ApiNavigation;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.sdk.remoteapi.exception.InvalidLocationException;
-import com.sygic.sdk.remoteapi.exception.NavigationException;
 import com.sygic.sdk.remoteapi.model.Position;
 import com.sygic.sdk.remoteapi.model.RoadInfo;
 import com.sygic.sdk.remoteapi.model.WayPoint;
@@ -29,7 +28,6 @@ import com.sygic.sdk.remoteapi.model.WayPoint;
  * geocoding
  */
 public class LocationFragment extends Fragment {
-    private View mRoot;
     private EditText mPosX, mPosY, mAddress;
     private TextView mText;
 
@@ -47,7 +45,7 @@ public class LocationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRoot = inflater.inflate(R.layout.fragment_location, container, false);
+        View mRoot = inflater.inflate(R.layout.fragment_location, container, false);
 
         registerButtons(mRoot);
         registerFields(mRoot);
@@ -85,101 +83,85 @@ public class LocationFragment extends Fragment {
         final Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
 
         Button btn = (Button) rootView.findViewById(R.id.btn_loc_address_info);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String str = null;
-                try {
-                    int x = 0, y = 0;
-                    if (!mPosX.getText().toString().equals("")) {
-                        x = Integer.parseInt(mPosX.getText().toString());
-                    } else {
-                        mPosX.startAnimation(shake);
-                    }
-                    if (!mPosY.getText().toString().equals("")) {
-                        y = Integer.parseInt(mPosY.getText().toString());
-                    } else {
-                        mPosY.startAnimation(shake);
-                    }
-                    str = ApiLocation.getLocationAddressInfo(new Position(x, y), SdkApplication.MAX);
-                } catch (InvalidLocationException e) {
-                    e.printStackTrace();
+        btn.setOnClickListener(view -> {
+            String str = null;
+            try {
+                int x = 0, y = 0;
+                if (!mPosX.getText().toString().equals("")) {
+                    x = Integer.parseInt(mPosX.getText().toString());
+                } else {
+                    mPosX.startAnimation(shake);
                 }
-                if (str != null) {
-                    mText.setText(str);
+                if (!mPosY.getText().toString().equals("")) {
+                    y = Integer.parseInt(mPosY.getText().toString());
+                } else {
+                    mPosY.startAnimation(shake);
                 }
+                str = ApiLocation.getLocationAddressInfo(new Position(x, y), SdkApplication.MAX);
+            } catch (InvalidLocationException e) {
+                e.printStackTrace();
+            }
+            if (str != null) {
+                mText.setText(str);
             }
         });
 
         btn = (Button) rootView.findViewById(R.id.btn_loc_road_info);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RoadInfo info = null;
-                try {
-                    int x = 0, y = 0;
-                    if (!mPosX.getText().toString().equals("")) {
-                        x = Integer.parseInt(mPosX.getText().toString());
-                    } else {
-                        mPosX.startAnimation(shake);
-                    }
-                    if (!mPosY.getText().toString().equals("")) {
-                        y = Integer.parseInt(mPosY.getText().toString());
-                    } else {
-                        mPosY.startAnimation(shake);
-                    }
-                    info = ApiLocation.getLocationRoadInfo(new Position(x, y), SdkApplication.MAX);
-                } catch (InvalidLocationException e) {
-                    e.printStackTrace();
+        btn.setOnClickListener(view -> {
+            RoadInfo info = null;
+            try {
+                int x = 0, y = 0;
+                if (!mPosX.getText().toString().equals("")) {
+                    x = Integer.parseInt(mPosX.getText().toString());
+                } else {
+                    mPosX.startAnimation(shake);
                 }
-                if (info != null) {
-                    mText.setText(info.toString());
+                if (!mPosY.getText().toString().equals("")) {
+                    y = Integer.parseInt(mPosY.getText().toString());
+                } else {
+                    mPosY.startAnimation(shake);
                 }
+                info = ApiLocation.getLocationRoadInfo(new Position(x, y), SdkApplication.MAX);
+            } catch (InvalidLocationException e) {
+                e.printStackTrace();
+            }
+            if (info != null) {
+                mText.setText(info.toString());
             }
         });
 
         btn = (Button) rootView.findViewById(R.id.btn_loc_navi_point);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    int x = 0, y = 0;
-                    if (!mPosX.getText().toString().equals("")) {
-                        x = Integer.parseInt(mPosX.getText().toString());
-                    } else {
-                        mPosX.startAnimation(shake);
-                    }
-                    if (!mPosY.getText().toString().equals("")) {
-                        y = Integer.parseInt(mPosY.getText().toString());
-                        String address = ApiLocation.getLocationAddressInfo(new Position(x, y), SdkApplication.MAX);
-                        ApiNavigation.startNavigation(new WayPoint(address, x, y), 0, false, SdkApplication.MAX);
-                    } else {
-                        mPosY.startAnimation(shake);
-                    }
-                } catch (InvalidLocationException e) {
-                    e.printStackTrace();
-                } catch (NavigationException e) {
-                    e.printStackTrace();
+        btn.setOnClickListener(view -> {
+            try {
+                int x = 0, y = 0;
+                if (!mPosX.getText().toString().equals("")) {
+                    x = Integer.parseInt(mPosX.getText().toString());
+                } else {
+                    mPosX.startAnimation(shake);
                 }
+                if (!mPosY.getText().toString().equals("")) {
+                    y = Integer.parseInt(mPosY.getText().toString());
+                    String address = ApiLocation.getLocationAddressInfo(new Position(x, y), SdkApplication.MAX);
+                    ApiNavigation.startNavigation(new WayPoint(address, x, y), 0, false, SdkApplication.MAX);
+                } else {
+                    mPosY.startAnimation(shake);
+                }
+            } catch (GeneralException e) {
+                e.printStackTrace();
             }
         });
 
         btn = (Button) rootView.findViewById(R.id.btn_loc_navi_add);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if (mAddress.getText().length() == 0) {
-                        mAddress.startAnimation(shake);
-                    } else {
-                        Position pos = ApiLocation.locationFromAddress(mAddress.getText().toString(), false, true, 0);
-                        ApiNavigation.startNavigation(new WayPoint(mAddress.getText().toString(), pos.getX(), pos.getY()), 0, false, 0);
-                    }
-                } catch (NavigationException e) {
-                    e.printStackTrace();
-                } catch (GeneralException e) {
-                    e.printStackTrace();
+        btn.setOnClickListener(view -> {
+            try {
+                if (mAddress.getText().length() == 0) {
+                    mAddress.startAnimation(shake);
+                } else {
+                    Position pos = ApiLocation.locationFromAddress(mAddress.getText().toString(), false, true, 0);
+                    ApiNavigation.startNavigation(new WayPoint(mAddress.getText().toString(), pos.getX(), pos.getY()), 0, false, 0);
                 }
+            } catch (GeneralException e) {
+                e.printStackTrace();
             }
         });
     }

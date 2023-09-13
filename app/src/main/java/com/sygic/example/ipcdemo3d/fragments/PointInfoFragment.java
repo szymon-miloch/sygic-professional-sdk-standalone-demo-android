@@ -12,12 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiItinerary;
-import com.sygic.sdk.remoteapi.ApiNavigation;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
-import com.sygic.sdk.remoteapi.model.RouteInfo;
 import com.sygic.sdk.remoteapi.model.StopOffPoint;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * shows info about selected StopOffPoint
@@ -55,23 +51,9 @@ public class PointInfoFragment extends Fragment {
         return view;
     }
 
-    private String formatDate(int seconds) {
-        int day = (int) TimeUnit.SECONDS.toDays(seconds);
-        int hour = (int) TimeUnit.SECONDS.toHours(seconds) - 24 * day;
-        int min = (int) TimeUnit.SECONDS.toMinutes(seconds) - 60 * hour;
-
-        if (day == 0) {
-            return String.format("%d h %d min", hour, min);
-        } else {
-            return String.format("%d days, %d h %d min", day, hour, min);
-        }
-    }
-
     private void fillView(View view) {
-        RouteInfo info = null;
         try {
             mPoint = ApiItinerary.getItineraryList(mItinerary, SdkApplication.MAX).get(mPos);
-            info = ApiNavigation.getRouteInfo(true, SdkApplication.MAX);
         } catch (GeneralException e) {
             e.printStackTrace();
         }

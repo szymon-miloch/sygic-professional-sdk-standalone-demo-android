@@ -50,8 +50,7 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle args = getArguments();
-        SetAlertDialogEarth sed = new SetAlertDialogEarth(getActivity(), this, args);
-        return sed;
+        return new SetAlertDialogEarth(getActivity(), this, args);
     }
 
     @Override
@@ -79,8 +78,6 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 
     private class SetAlertDialogEarth extends AlertDialog {
         private final EditText[] et = new EditText[4];
-        private final String[] init = new String[4];
-        private final String title;
         private final OnDialogSet callback;
 
 
@@ -94,7 +91,8 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
         public SetAlertDialogEarth(Context context, int theme, OnDialogSet callBack, Bundle args) {
             super(context, theme);
             callback = callBack;
-            title = args.getString("title");
+            String title = args.getString("title");
+            String[] init = new String[4];
             init[0] = args.getString("startlon");
             init[1] = args.getString("startlat");
             init[2] = args.getString("stoplon");
@@ -120,48 +118,40 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
             et[3].setText(init[3]);
 
             Button btn_ok = (Button) view.findViewById(R.id.btn_add_itin_ok);
-            btn_ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    final Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-                    if (et[0].getText().length() < 1) {
-                        et[0].startAnimation(shake);
-                        return;
-                    }
-                    if (et[1].getText().length() < 1) {
-                        et[1].startAnimation(shake);
-                        return;
-                    }
-                    if (et[2].getText().length() < 1) {
-                        et[2].startAnimation(shake);
-                        return;
-                    }
-                    if (et[3].getText().length() < 1) {
-                        et[3].startAnimation(shake);
-                        return;
-                    }
-                    if (callback != null) {
-                        et[0].clearFocus();
-                        et[1].clearFocus();
-                        et[2].clearFocus();
-                        et[3].clearFocus();
-                        bundle.putInt("startlon", Integer.parseInt(et[0].getText().toString()));
-                        bundle.putInt("startlat", Integer.parseInt(et[1].getText().toString()));
-                        bundle.putInt("stoplon", Integer.parseInt(et[2].getText().toString()));
-                        bundle.putInt("stoplat", Integer.parseInt(et[3].getText().toString()));
-                        callback.onDialogSet(bundle);
-                    }
+            btn_ok.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                final Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+                if (et[0].getText().length() < 1) {
+                    et[0].startAnimation(shake);
+                    return;
+                }
+                if (et[1].getText().length() < 1) {
+                    et[1].startAnimation(shake);
+                    return;
+                }
+                if (et[2].getText().length() < 1) {
+                    et[2].startAnimation(shake);
+                    return;
+                }
+                if (et[3].getText().length() < 1) {
+                    et[3].startAnimation(shake);
+                    return;
+                }
+                if (callback != null) {
+                    et[0].clearFocus();
+                    et[1].clearFocus();
+                    et[2].clearFocus();
+                    et[3].clearFocus();
+                    bundle.putInt("startlon", Integer.parseInt(et[0].getText().toString()));
+                    bundle.putInt("startlat", Integer.parseInt(et[1].getText().toString()));
+                    bundle.putInt("stoplon", Integer.parseInt(et[2].getText().toString()));
+                    bundle.putInt("stoplat", Integer.parseInt(et[3].getText().toString()));
+                    callback.onDialogSet(bundle);
                 }
             });
 
             Button btn_cancel = (Button) view.findViewById(R.id.btn_add_itin_cancel);
-            btn_cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    callback.onDialogCancel();
-                }
-            });
+            btn_cancel.setOnClickListener(v -> callback.onDialogCancel());
         }
 
         @Override

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  */
 public class RouteFragment extends Fragment {
     private Activity mActivity;
-    private ArrayAdapter<String> mListAdapter, mRouteAdapter;
+    private ArrayAdapter<String> mListAdapter;
 
     public RouteFragment() {
     }
@@ -38,7 +37,7 @@ public class RouteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_1);
+        mListAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
     }
 
     /**
@@ -68,17 +67,14 @@ public class RouteFragment extends Fragment {
     private void registerListView(View rootView) {
         ListView list = (ListView) rootView.findViewById(R.id.waypoints);
         list.setAdapter(mListAdapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Fragment f = new PointInfoFragment();
-                Bundle b = new Bundle();
-                b.putInt("position", i);
-                b.putString("name", "default");
-                f.setArguments(b);
-                getFragmentManager().beginTransaction().add(RouteFragment.this.getId(), f)
-                        .addToBackStack(null).hide(RouteFragment.this).commit();
-            }
+        list.setOnItemClickListener((adapterView, view, i, l) -> {
+            Fragment f = new PointInfoFragment();
+            Bundle b = new Bundle();
+            b.putInt("position", i);
+            b.putString("name", "default");
+            f.setArguments(b);
+            getFragmentManager().beginTransaction().add(RouteFragment.this.getId(), f)
+                    .addToBackStack(null).hide(RouteFragment.this).commit();
         });
     }
 
