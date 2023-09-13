@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:padding="16dp"
-                android:layout_weight="1">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:layout_weight="1">
 
     <TextView
-            android:id="@+id/tv_itin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select itinerary:"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:id="@+id/tv_itin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select itinerary:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <View android:id="@+id/strut"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_centerHorizontal="true"/>
+    <View
+        android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btn_add_entry"
@@ -28,7 +29,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_itin"
         android:layout_marginTop="8dp"
-        android:text="Add entry" >
+        android:text="Add entry">
 
     </Button>
 
@@ -42,51 +43,51 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
-        android:id="@+id/itin_ll_hor" 
+        android:id="@+id/itin_ll_hor"
         android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        
-        <LinearLayout 
-            android:id="@+id/itin_ll_ver1" 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal">
-	        
+
+        <LinearLayout
+            android:id="@+id/itin_ll_ver1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btn_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.26"
-                android:text="Calculate route" >
+                android:text="Calculate route">
 
-	        </Button>
-            
+            </Button>
+
         </LinearLayout>
-        
-        <LinearLayout 
-            android:id="@+id/itin_ll_ver2" 
+
+        <LinearLayout
+            android:id="@+id/itin_ll_ver2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-    
-		    <Button android:layout_height="wrap_content"
-		            android:layout_width="wrap_content"
-		            android:text="Add itinerary"
-		            android:layout_weight="1"
-		            android:id="@+id/btn_add">
-		    </Button>
-		    
-		    <Button android:layout_height="wrap_content"
-	            android:layout_width="wrap_content"
-	            android:text="Delete itinerary"
-	            android:layout_weight="1"
-	            android:id="@+id/btn_del">
-	        </Button>
-	        
+
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Add itinerary"
+                android:layout_weight="1"
+                android:id="@+id/btn_add"></Button>
+
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Delete itinerary"
+                android:layout_weight="1"
+                android:id="@+id/btn_del"></Button>
+
         </LinearLayout>
-        
+
     </LinearLayout>
 
     <TextView

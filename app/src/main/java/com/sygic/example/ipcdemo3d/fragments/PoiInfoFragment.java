@@ -2,17 +2,18 @@ package com.sygic.example.ipcdemo3d.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
+import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiMaps;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.sdk.remoteapi.model.Poi;
-import com.sygic.example.ipcdemo3d.R;
 
 /**
  * shows info about the poi
@@ -22,6 +23,7 @@ public class PoiInfoFragment extends Fragment {
 
     /**
      * read the arguments to a POI class
+     *
      * @param activity
      */
     @Override

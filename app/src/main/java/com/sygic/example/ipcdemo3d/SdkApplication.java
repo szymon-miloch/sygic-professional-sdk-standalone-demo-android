@@ -50,8 +50,8 @@ public class SdkApplication extends Application {
 
     public static boolean sRunning = false;
     private static boolean mService = false;
-    
-    
+
+
     private static String getDriveRoot() {
     	String pathToDrive = null;
         SharedPreferences prefs = mAppContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE);

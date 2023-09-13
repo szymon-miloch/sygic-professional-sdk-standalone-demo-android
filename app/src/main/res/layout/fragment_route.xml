@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:padding="16dp"
-                android:layout_weight="1">
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:layout_weight="1">
 
-    <TextView android:id="@+id/current"
-              android:layout_width="wrap_content"
-              android:text="Current Route:"
-              android:layout_height="wrap_content"
-              android:textAppearance="?android:attr/textAppearanceLarge"/>
+    <TextView
+        android:id="@+id/current"
+        android:layout_width="wrap_content"
+        android:text="Current Route:"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
-            android:id="@+id/waypoints"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@+id/current"
-            />
+        android:id="@+id/waypoints"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/current" />
 
 
 </RelativeLayout>

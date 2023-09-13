@@ -3,7 +3,6 @@ package com.sygic.example.ipcdemo3d.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
+import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiLocation;
 import com.sygic.sdk.remoteapi.ApiNavigation;
@@ -22,7 +24,6 @@ import com.sygic.sdk.remoteapi.exception.NavigationException;
 import com.sygic.sdk.remoteapi.model.Position;
 import com.sygic.sdk.remoteapi.model.RoadInfo;
 import com.sygic.sdk.remoteapi.model.WayPoint;
-import com.sygic.example.ipcdemo3d.R;
 
 /**
  * geocoding
@@ -50,30 +51,30 @@ public class LocationFragment extends Fragment {
 
         registerButtons(mRoot);
         registerFields(mRoot);
-        
+
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-    	int coords[] = {sharedPref.getInt("locStopLon", 0), sharedPref.getInt("locStopLat", 0)};
-    	String address = sharedPref.getString("locAddress", "");
-        
+        int[] coords = {sharedPref.getInt("locStopLon", 0), sharedPref.getInt("locStopLat", 0)};
+        String address = sharedPref.getString("locAddress", "");
+
         mPosX.setText(coords[0] == 0 ? "" : Integer.toString(coords[0]));
         mPosY.setText(coords[1] == 0 ? "" : Integer.toString(coords[1]));
         mAddress.setText(address);
-        
+
         return mRoot;
     }
 
     @Override
-	public void onDestroyView() {
-    	SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("locStopLon", mPosX.getText().toString().equals("") ? 0 : Integer.parseInt(mPosX.getText().toString()));
-		editor.putInt("locStopLat", mPosY.getText().toString().equals("") ? 0 : Integer.parseInt(mPosY.getText().toString()));
-		editor.putString("locAddress", mAddress.getText().toString());
-		editor.commit();
-		super.onDestroyView();
-	}
+    public void onDestroyView() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("locStopLon", mPosX.getText().toString().equals("") ? 0 : Integer.parseInt(mPosX.getText().toString()));
+        editor.putInt("locStopLat", mPosY.getText().toString().equals("") ? 0 : Integer.parseInt(mPosY.getText().toString()));
+        editor.putString("locAddress", mAddress.getText().toString());
+        editor.commit();
+        super.onDestroyView();
+    }
 
-	private void registerFields(View view) {
+    private void registerFields(View view) {
         mPosX = (EditText) view.findViewById(R.id.et1);
         mPosY = (EditText) view.findViewById(R.id.et2);
         mAddress = (EditText) view.findViewById(R.id.et3);

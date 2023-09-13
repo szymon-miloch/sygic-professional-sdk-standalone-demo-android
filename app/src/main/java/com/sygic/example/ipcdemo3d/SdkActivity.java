@@ -1,8 +1,5 @@
 package com.sygic.example.ipcdemo3d;
 
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,19 +8,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.sygic.example.ipcdemo3d.fragments.ItinFragment;
 import com.sygic.example.ipcdemo3d.fragments.LocationFragment;
@@ -37,6 +32,8 @@ import com.sygic.sdk.remoteapi.Api;
 import com.sygic.sdk.remoteapi.ApiCallback;
 import com.sygic.sdk.remoteapi.events.ApiEvents;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
+
+import java.util.HashMap;
 
 /**
  * Main activity for the application, decides which layout to use depending on the orientation,
@@ -73,7 +70,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
 
         //handler to post ui on the main thread
         mHandler = new Handler();
-        
+
         mSoundListener = new SygicSoundListener();
 
         //create a hash map with string events associated with their ids
@@ -110,14 +107,13 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         super.onDestroy();
         Log.v("SdkActivity", "onDestroy");
         try {
-        	Api.getInstance().disconnect();
+            Api.getInstance().disconnect();
         } catch (IllegalStateException e) {
-        	//no problem as we are finishing. Message in logcat is enough.
+            //no problem as we are finishing. Message in logcat is enough.
         }
-    	SdkApplication.setService(false);
-    	unregisterReceiver(mReceiver);
+        SdkApplication.setService(false);
+        unregisterReceiver(mReceiver);
     }
-
 
 
     /**
@@ -144,51 +140,52 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
     /**
      * Check if Truck navigation is running;
      *
-     * @param	timeOut	Timeout in milliseconds to wait for getting result
-     * @return			true if application is running
+     * @param    timeOut    Timeout in milliseconds to wait for getting result
+     * @return true if application is running
      */
     @Override
     public boolean isAppStarted(int timeOut) {
-    	boolean appRunning = false;
+        boolean appRunning = false;
 
-    	if (SdkApplication.isService()) {
-			try {
-				appRunning = Api.isApplicationRunning(timeOut);
-			} catch (GeneralException e) {
-				e.printStackTrace();
-			}
-		}
+        if (SdkApplication.isService()) {
+            try {
+                appRunning = Api.isApplicationRunning(timeOut);
+            } catch (GeneralException e) {
+                e.printStackTrace();
+            }
+        }
 
-    	return appRunning;
+        return appRunning;
     }
 
 
     /**
      * Check if Sygic service is bound;
      *
-     * @return			true if Sygic service is bound
+     * @return true if Sygic service is bound
      */
     @Override
     public boolean isServiceConnected() {
-		return SdkApplication.isService();
+        return SdkApplication.isService();
     }
 
 
     /**
      * Enable/Disable tabs;
      *
-     * @param	enabled		enabled/disabled state for tabs 1..n
+     * @param    enabled        enabled/disabled state for tabs 1..n
      */
-    @SuppressLint("NewApi") @Override
+    @SuppressLint("NewApi")
+    @Override
     public void setTabsState(boolean enabled) {
-    	int tabsCount = mTabHost.getTabWidget().getChildCount();
-    	for (int i = 1; i < tabsCount; i++) {
-    		mTabHost.getTabWidget().getChildTabViewAt(i).setEnabled(enabled);
-    		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-    			mTabHost.getTabWidget().getChildTabViewAt(i).setAlpha(enabled ? 1 : 0.5f);
-    		}
-    		mTabHost.getTabWidget().getChildTabViewAt(i);
-    	}
+        int tabsCount = mTabHost.getTabWidget().getChildCount();
+        for (int i = 1; i < tabsCount; i++) {
+            mTabHost.getTabWidget().getChildTabViewAt(i).setEnabled(enabled);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                mTabHost.getTabWidget().getChildTabViewAt(i).setAlpha(enabled ? 1 : 0.5f);
+            }
+            mTabHost.getTabWidget().getChildTabViewAt(i);
+        }
     }
 
 
@@ -324,142 +321,139 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
 
     public class ActivityReceiver extends BroadcastReceiver {
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (intent.getAction().equals(SdkApplication.INTENT_ACTION_APP_STARTED_LOCAL)) {
-				setTabsState(true);
-				NaviFragment naviFrag = (NaviFragment) getSupportFragmentManager().findFragmentByTag(sMenu[0]);
-				naviFrag.refreshState(true, SdkApplication.isService());
-	    	}
-		}
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SdkApplication.INTENT_ACTION_APP_STARTED_LOCAL)) {
+                setTabsState(true);
+                NaviFragment naviFrag = (NaviFragment) getSupportFragmentManager().findFragmentByTag(sMenu[0]);
+                naviFrag.refreshState(true, SdkApplication.isService());
+            }
+        }
 
     }
 
 
-	/**
+    /**
      * These functions are defined in Activity because of exchanging data between Dialogs (Dialog Fragments) and Fragments.
      */
-	@Override
-	public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("itinStartLon", startLon);
-		editor.putInt("itinStartLat", startLat);
-		editor.putInt("itinStopLon", stopLon);
-		editor.putInt("itinStopLat", stopLat);
-		editor.commit();
-		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addItin(startLon, startLat, stopLon, stopLat);
-	}
+    @Override
+    public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("itinStartLon", startLon);
+        editor.putInt("itinStartLat", startLat);
+        editor.putInt("itinStopLon", stopLon);
+        editor.putInt("itinStopLat", stopLat);
+        editor.commit();
+        ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
+        f.addItin(startLon, startLat, stopLon, stopLat);
+    }
 
 
-	public boolean isPackageExisted(String targetPackage){
+    public boolean isPackageExisted(String targetPackage) {
         List<ApplicationInfo> packages;
         PackageManager pm;
-            pm = getPackageManager();
-            packages = pm.getInstalledApplications(0);
-            for (ApplicationInfo packageInfo : packages) {
-        if(packageInfo.packageName.equals(targetPackage)) return true;
+        pm = getPackageManager();
+        packages = pm.getInstalledApplications(0);
+        for (ApplicationInfo packageInfo : packages) {
+            if (packageInfo.packageName.equals(targetPackage)) return true;
         }
         return false;
     }
 
 
-	public ApiCallback getApiCallback() {
-		return mApiCallback;
-	}
+    public ApiCallback getApiCallback() {
+        return mApiCallback;
+    }
 
 
-
-	//Api.bringApplicationToBackground() can be invoked by some event from background service.
-	//We used as an example AlarmManager to set wakeup event after @millis. (see also StateChangeReceiver)
-	@Override
-	public void bringToBackg(long millis) {
-        AlarmManager am = (AlarmManager)(getSystemService(Context.ALARM_SERVICE));
+    //Api.bringApplicationToBackground() can be invoked by some event from background service.
+    //We used as an example AlarmManager to set wakeup event after @millis. (see also StateChangeReceiver)
+    @Override
+    public void bringToBackg(long millis) {
+        AlarmManager am = (AlarmManager) (getSystemService(Context.ALARM_SERVICE));
         Intent amIntent = new Intent(this, StateChangeReceiver.class);
         amIntent.setAction(SdkApplication.INTENT_ACTION_AM_WAKEUP);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, amIntent, 0);
-		am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + millis, pi);
-	}
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + millis, pi);
+    }
 
-	@Override
-	public void addVisibleViapoint(int viaLon, int viaLat) {
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("itinViaLon", viaLon);
-		editor.putInt("itinViaLat", viaLat);
-		editor.commit();
-		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addVisibleViapoint(viaLon, viaLat);
-	}
+    @Override
+    public void addVisibleViapoint(int viaLon, int viaLat) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("itinViaLon", viaLon);
+        editor.putInt("itinViaLat", viaLat);
+        editor.commit();
+        ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
+        f.addVisibleViapoint(viaLon, viaLat);
+    }
 
-	@Override
-	public void addInvisibleViapoint(int viaLon, int viaLat) {
-		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addInvisibleViapoint(viaLon, viaLat);
-	}
-
-
+    @Override
+    public void addInvisibleViapoint(int viaLon, int viaLat) {
+        ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
+        f.addInvisibleViapoint(viaLon, viaLat);
+    }
 
 
-	/**
+    /**
      * Callback receiver from Navigation
      */
-	private class DemoApiCallback implements ApiCallback {
-		@Override
-	    public void onEvent(final int event, final String data) {
-	        boolean show = true;
-	        switch (event) {
-	            case ApiEvents.EVENT_APP_STARTED:
-	                SdkApplication.sRunning = true;
-	                break;
-	            case ApiEvents.EVENT_APP_EXIT:
-	                SdkApplication.sRunning = false;
-	                Api.getInstance().disconnect();
-	                SdkApplication.setService(false);
-	                
-	                Intent intent = new Intent();
-	                intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
-	                sendBroadcast(intent);
-	                break;
-	            case ApiEvents.EVENT_MAIN_MENU:
-	                show = false;
-	                break;
-	        }
-	        if (show)
-	            mHandler.post(new Runnable() {
-	                @Override
-	                public void run() {
-	                    String str = mEvents.get(event);
-	                    str += data != null ? " " + data : "";
-	                    Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-	                }
-	            });
-	    }
+    private class DemoApiCallback implements ApiCallback {
+        @Override
+        public void onEvent(final int event, final String data) {
+            boolean show = true;
+            switch (event) {
+                case ApiEvents.EVENT_APP_STARTED:
+                    SdkApplication.sRunning = true;
+                    break;
+                case ApiEvents.EVENT_APP_EXIT:
+                    SdkApplication.sRunning = false;
+                    Api.getInstance().disconnect();
+                    SdkApplication.setService(false);
 
-	    @Override
-	    public void onServiceConnected() {
-	    	mReconnect = false;
-	        SdkApplication.setService(true);
+                    Intent intent = new Intent();
+                    intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
+                    sendBroadcast(intent);
+                    break;
+                case ApiEvents.EVENT_MAIN_MENU:
+                    show = false;
+                    break;
+            }
+            if (show)
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String str = mEvents.get(event);
+                        str += data != null ? " " + data : "";
+                        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        }
 
-	        Intent intent = new Intent();
-	        intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
-	        sendBroadcast(intent);
-	        setTabsState(true);
-	        
-	        Api.getInstance().setOnSoundListener(mSoundListener);
-	        Api.getInstance().setOnTtsListener(mSoundListener);
-	    }
+        @Override
+        public void onServiceConnected() {
+            mReconnect = false;
+            SdkApplication.setService(true);
 
-	    @Override
-	    public void onServiceDisconnected() {
-	        SdkApplication.setService(false);
+            Intent intent = new Intent();
+            intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
+            sendBroadcast(intent);
+            setTabsState(true);
 
-	        mReconnect = true;
-	        Intent intent = new Intent();
-	        intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
-	        sendBroadcast(intent);
-	    }
-	}
+            Api.getInstance().setOnSoundListener(mSoundListener);
+            Api.getInstance().setOnTtsListener(mSoundListener);
+        }
+
+        @Override
+        public void onServiceDisconnected() {
+            SdkApplication.setService(false);
+
+            mReconnect = true;
+            Intent intent = new Intent();
+            intent.setAction(SdkApplication.INTENT_CHANGE_STATE);
+            sendBroadcast(intent);
+        }
+    }
 
 }

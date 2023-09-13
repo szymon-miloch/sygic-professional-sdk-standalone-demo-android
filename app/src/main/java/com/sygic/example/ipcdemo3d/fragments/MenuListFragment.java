@@ -6,16 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import androidx.fragment.app.ListFragment;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.ListFragment;
+
+import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkActivity;
 import com.sygic.example.ipcdemo3d.SdkApplication;
-import com.sygic.example.ipcdemo3d.R;
 
 /**
  * menu
@@ -25,18 +25,19 @@ public class MenuListFragment extends ListFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     private boolean mEnabled = false;
     private ChangeStateMenuReceiver mChangeReceiver;
+
     protected static class ViewHolder {
-		TextView tvItem;
-	}
+        TextView tvItem;
+    }
 
     /**
      * callback for the selected item
      */
     public interface Callbacks {
-        public void onItemSelected(int id);
+        void onItemSelected(int id);
     }
 
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(int id) {
         }
@@ -59,14 +60,11 @@ public class MenuListFragment extends ListFragment {
                 R.layout.sdk_list_item,
                 R.id.list_item_text,
                 menu) {
-        	
-        	@Override
-        	public boolean isEnabled(int position) {
-        		if (!mEnabled && (position > 0 && position < menu.length)) {
-        			 return false;
-        		}
-        		return true;
-        	}
+
+            @Override
+            public boolean isEnabled(int position) {
+                return mEnabled || (position <= 0 || position >= menu.length);
+            }
         });
     }
 
@@ -84,20 +82,20 @@ public class MenuListFragment extends ListFragment {
 
         mCallbacks = (Callbacks) activity;
     }
-    
-    
+
+
     @Override
     public void onResume() {
-    	IntentFilter intentFilter = new IntentFilter(SdkApplication.INTENT_CHANGE_MENU_STATE);
-    	getActivity().registerReceiver(mChangeReceiver, intentFilter);
-    	super.onResume();
+        IntentFilter intentFilter = new IntentFilter(SdkApplication.INTENT_CHANGE_MENU_STATE);
+        getActivity().registerReceiver(mChangeReceiver, intentFilter);
+        super.onResume();
     }
-    
-    
+
+
     @Override
     public void onPause() {
-    	getActivity().unregisterReceiver(mChangeReceiver);
-    	super.onPause();
+        getActivity().unregisterReceiver(mChangeReceiver);
+        super.onPause();
     }
 
     @Override
@@ -118,24 +116,24 @@ public class MenuListFragment extends ListFragment {
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         getListView().setItemChecked(SdkActivity.tabId, true);
     }
-    
-    
+
+
     public void setListState(boolean enabled) {
-    	mEnabled = enabled;
+        mEnabled = enabled;
     }
-    
-    
+
+
     private class ChangeStateMenuReceiver extends BroadcastReceiver {
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			if (action.equals(SdkApplication.INTENT_CHANGE_MENU_STATE)) {
-				boolean enabled = intent.getBooleanExtra("enabled", false);
-				setListState(enabled);
-			}
-		}
-    	
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(SdkApplication.INTENT_CHANGE_MENU_STATE)) {
+                boolean enabled = intent.getBooleanExtra("enabled", false);
+                setListState(enabled);
+            }
+        }
+
     }
-    
+
 }

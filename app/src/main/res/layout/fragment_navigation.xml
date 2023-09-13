@@ -1,146 +1,150 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
-	<RelativeLayout 
-	                android:orientation="vertical"
-	                android:layout_height="wrap_content"
-	                android:layout_width="match_parent"
-	                android:padding="16dp">
-	    
-	    <TextView android:layout_height="wrap_content"
-	              android:layout_width="wrap_content"
-	              android:id="@+id/tv"
-	              android:text="Status:"
-	              android:textAppearance="?android:attr/textAppearanceLarge"/>
-	
-	    <TextView android:layout_height="wrap_content"
-	              android:layout_width="wrap_content"
-	              android:id="@+id/status"
-	              android:layout_marginLeft="8dp"
-	              android:layout_toRightOf="@+id/tv"
-	              android:textAppearance="?android:attr/textAppearanceLarge"/>
-	
-	    <View android:id="@+id/strut"
-	          android:layout_width="0dp"
-	          android:layout_height="0dp"
-	          android:layout_marginLeft="4dp"
-	          android:layout_marginRight="4dp"
-	          android:layout_centerHorizontal="true"/>
-	
-	    <ToggleButton android:layout_height="wrap_content"
-	            android:textOn="Disconnect Sygic Service"
-	            android:textOff="Connect Sygic Service"
-	            android:layout_below="@+id/status"
-	            android:layout_width="fill_parent"
-	            android:layout_marginTop="8dp"
-	            android:id="@+id/btn_connect">
-	    </ToggleButton>
-	    
-	    <Button
-	        android:id="@+id/btn_start_foreg"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/btn_connect"
-	        android:layout_marginTop="8dp"
-	        android:text="Start Navi in foreg" >
-	
-	    </Button>
-	
-	    <Button
-	        android:id="@+id/btn_bring_foreg_5sec"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/btn_start_foreg"
-	        android:layout_marginTop="8dp"
-	        android:text="Bring to foreg for 5 sec" />
-	    
-	    <Button
-	        android:id="@+id/btn_end_navi"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/btn_bring_foreg_5sec"
-	        android:layout_marginTop="8dp"
-	        android:text="End navigation" />
-	
-	
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toRightOf="@+id/strut"
-	            android:layout_alignParentRight="true"
-	            android:text="App version"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_end_navi"
-	            android:id="@+id/btn_version_app">
-	    </Button>
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toLeftOf="@+id/strut"
-	            android:layout_alignParentLeft="true"
-	            android:text="Options"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_end_navi"
-	            android:id="@+id/btn_options">
-	    </Button>
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toRightOf="@+id/strut"
-	            android:layout_alignParentRight="true"
-	            android:text="Map version"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_version_app"
-	            android:id="@+id/btn_version_map">
-	    </Button>
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toLeftOf="@+id/strut"
-	            android:layout_alignParentLeft="true"
-	            android:text="Device id"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_version_app"
-	            android:id="@+id/btn_dev_id">
-	    </Button>
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toLeftOf="@+id/strut"
-	            android:layout_alignParentLeft="true"
-	            android:text="Flash message"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_dev_id"
-	            android:id="@+id/btn_flash">
-	    </Button>
-	
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toRightOf="@+id/strut"
-	            android:layout_alignParentRight="true"
-	            android:text="Show message"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_dev_id"
-	            android:id="@+id/btn_show">
-	    </Button>
-	    
-	    <Button android:layout_height="wrap_content"
-	            android:layout_width="0dp"
-	            android:layout_toRightOf="@+id/strut"
-	            android:layout_alignParentRight="true"
-	            android:text="Sdk version"
-	            android:layout_marginTop="8dp"
-	            android:layout_below="@+id/btn_show"
-	            android:id="@+id/btn_sdk_version">
-	    </Button>
-	
-	    <TextView android:layout_height="wrap_content"
-	              android:layout_width="wrap_content"
-	              android:id="@+id/tv_info"
-	              android:layout_marginTop="16dp"
-	              android:layout_below="@+id/btn_sdk_version"
-	              android:layout_alignParentBottom="true"
-	              android:textAppearance="?android:attr/textAppearanceLarge"/>
-	
-	</RelativeLayout>
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv"
+            android:text="Status:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/status"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/tv"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <View
+            android:id="@+id/strut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_centerHorizontal="true" />
+
+        <ToggleButton
+            android:layout_height="wrap_content"
+            android:textOn="Disconnect Sygic Service"
+            android:textOff="Connect Sygic Service"
+            android:layout_below="@+id/status"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="8dp"
+            android:id="@+id/btn_connect"></ToggleButton>
+
+        <Button
+            android:id="@+id/btn_start_foreg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_connect"
+            android:layout_marginTop="8dp"
+            android:text="Start Navi in foreg">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btn_bring_foreg_5sec"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_start_foreg"
+            android:layout_marginTop="8dp"
+            android:text="Bring to foreg for 5 sec" />
+
+        <Button
+            android:id="@+id/btn_end_navi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_bring_foreg_5sec"
+            android:layout_marginTop="8dp"
+            android:text="End navigation" />
+
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toRightOf="@+id/strut"
+            android:layout_alignParentRight="true"
+            android:text="App version"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_end_navi"
+            android:id="@+id/btn_version_app"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toLeftOf="@+id/strut"
+            android:layout_alignParentLeft="true"
+            android:text="Options"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_end_navi"
+            android:id="@+id/btn_options"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toRightOf="@+id/strut"
+            android:layout_alignParentRight="true"
+            android:text="Map version"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_version_app"
+            android:id="@+id/btn_version_map"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toLeftOf="@+id/strut"
+            android:layout_alignParentLeft="true"
+            android:text="Device id"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_version_app"
+            android:id="@+id/btn_dev_id"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toLeftOf="@+id/strut"
+            android:layout_alignParentLeft="true"
+            android:text="Flash message"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_dev_id"
+            android:id="@+id/btn_flash"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toRightOf="@+id/strut"
+            android:layout_alignParentRight="true"
+            android:text="Show message"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_dev_id"
+            android:id="@+id/btn_show"></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_toRightOf="@+id/strut"
+            android:layout_alignParentRight="true"
+            android:text="Sdk version"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_show"
+            android:id="@+id/btn_sdk_version"></Button>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_info"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/btn_sdk_version"
+            android:layout_alignParentBottom="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
 </ScrollView>

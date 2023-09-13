@@ -1,14 +1,9 @@
 package com.sygic.example.ipcdemo3d.fragments;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +19,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
+import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkActivity;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiPoi;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.sdk.remoteapi.model.Poi;
 import com.sygic.sdk.remoteapi.model.PoiCategory;
-import com.sygic.example.ipcdemo3d.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * shows the POIs from the favorites category
@@ -82,7 +83,7 @@ public class PoisFragment extends Fragment {
     }
 
     private void populateSpinner() {
-    	mSpinnerAdapter.clear();
+        mSpinnerAdapter.clear();
         ArrayList<PoiCategory> list = null;
         try {
             list = ApiPoi.getPoiCategoryList(SdkApplication.MAX);
@@ -92,19 +93,19 @@ public class PoisFragment extends Fragment {
 
         Collections.sort(list, new Comparator<PoiCategory>() {
 
-			@Override
-			public int compare(PoiCategory arg0, PoiCategory arg1) {
-				Integer defCatA = null;
-				Integer defCatB = null;
-				try {
-					defCatA = Integer.parseInt(arg0.getName());
-					defCatB = Integer.parseInt(arg1.getName());
-					return defCatA.compareTo(defCatB);
-				} catch(NumberFormatException e) {
-					return arg0.getName().compareToIgnoreCase(arg1.getName());
-				}
-			}
-        	
+            @Override
+            public int compare(PoiCategory arg0, PoiCategory arg1) {
+                Integer defCatA = null;
+                Integer defCatB = null;
+                try {
+                    defCatA = Integer.parseInt(arg0.getName());
+                    defCatB = Integer.parseInt(arg1.getName());
+                    return defCatA.compareTo(defCatB);
+                } catch (NumberFormatException e) {
+                    return arg0.getName().compareToIgnoreCase(arg1.getName());
+                }
+            }
+
         });
         if (list != null && !list.isEmpty()) {
             for (PoiCategory cat : list) {

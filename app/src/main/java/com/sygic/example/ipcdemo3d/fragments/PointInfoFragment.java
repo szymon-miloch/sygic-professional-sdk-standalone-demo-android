@@ -2,19 +2,20 @@ package com.sygic.example.ipcdemo3d.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
+import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiItinerary;
 import com.sygic.sdk.remoteapi.ApiNavigation;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.sdk.remoteapi.model.RouteInfo;
 import com.sygic.sdk.remoteapi.model.StopOffPoint;
-import com.sygic.example.ipcdemo3d.R;
 
 import java.util.concurrent.TimeUnit;
 
