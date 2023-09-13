@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">IpcDemo3D</string>
-    <string name="none">None</string>
-    <string name="computing">Computing</string>
-    <string name="computed">Computed</string>
     <string name="sound_tts_help">Please, install first TTS data to be able test this feature. You can then enable TTS by SDK (see NAVIGATION->Options in this demo) or directly in navigation setting.</string>
-
-    <string-array name="bool">
-        <item>False</item>
-        <item>True</item>
-    </string-array>
 
     <string-array name="point_type">
         <item>Viapoint</item>
