@@ -3,20 +3,16 @@ package com.sygic.example.ipcdemo3d.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
 import com.sygic.example.ipcdemo3d.SdkApplication;
-import com.sygic.sdk.remoteapi.Api;
 import com.sygic.sdk.remoteapi.ApiTts;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
 import com.sygic.example.ipcdemo3d.R;
