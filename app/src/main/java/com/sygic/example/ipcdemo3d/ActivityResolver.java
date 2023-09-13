@@ -7,9 +7,9 @@ public interface ActivityResolver {
 	public boolean isAppStarted(int timeOut);
 	public boolean isServiceConnected();
 	public void setTabsState(boolean enabled);
-	public void addItin(int startLong, int startLat, int stopLong, int stopLat);
-	public void addVisibleViapoint(int startLong, int startLat);
-	public void addInvisibleViapoint(int viaLong, int viaLat);
+	public void addItin(int startLon, int startLat, int stopLon, int stopLat);
+	public void addVisibleViapoint(int startLon, int startLat);
+	public void addInvisibleViapoint(int viaLon, int viaLat);
 	public void bringToBackg(long millis);
 	public ApiCallback getApiCallback();
 }

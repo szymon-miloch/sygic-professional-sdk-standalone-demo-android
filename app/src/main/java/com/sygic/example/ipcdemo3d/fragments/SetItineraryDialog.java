@@ -36,9 +36,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 		SetItineraryDialog frag = new SetItineraryDialog();
 		Bundle args = new Bundle();
 		args.putString("title", title);
-		args.putString("startlong", coord[0] == 0 ? "" : Integer.toString(coord[0]));
+		args.putString("startlon", coord[0] == 0 ? "" : Integer.toString(coord[0]));
 		args.putString("startlat", coord[1] == 0 ? "" : Integer.toString(coord[1]));
-		args.putString("stoplong", coord[2] == 0 ? "" : Integer.toString(coord[2]));
+		args.putString("stoplon", coord[2] == 0 ? "" : Integer.toString(coord[2]));
 		args.putString("stoplat", coord[3] == 0 ? "" : Integer.toString(coord[3]));
 		frag.setArguments(args);
 		
@@ -56,9 +56,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 	@Override
 	public void onDialogSet(Bundle bundle) {
 		int outCoord[] = new int[4];
-		outCoord[0] = bundle.getInt("startlong");
+		outCoord[0] = bundle.getInt("startlon");
 		outCoord[1] = bundle.getInt("startlat");
-		outCoord[2] = bundle.getInt("stoplong");
+		outCoord[2] = bundle.getInt("stoplon");
 		outCoord[3] = bundle.getInt("stoplat");
 		
 		callback.addItin(outCoord[0], outCoord[1], outCoord[2], outCoord[3]);
@@ -94,9 +94,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 	        super(context, theme);
 	        callback = callBack;
 	        title = args.getString("title");
-	        init[0] = args.getString("startlong");
+	        init[0] = args.getString("startlon");
 	        init[1] = args.getString("startlat");
-	        init[2] = args.getString("stoplong");
+	        init[2] = args.getString("stoplon");
 	        init[3] = args.getString("stoplat");
 
 	        setCanceledOnTouchOutside(false);
@@ -107,9 +107,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 	        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        View view = inflater.inflate(R.layout.dialog_itin, null);
 	        setView(view);
-	        et[0] = (EditText) view.findViewById(R.id.etLongStart);
+	        et[0] = (EditText) view.findViewById(R.id.etLonStart);
 	        et[1] = (EditText) view.findViewById(R.id.etLatStart);
-	        et[2] = (EditText) view.findViewById(R.id.etLongStop);
+	        et[2] = (EditText) view.findViewById(R.id.etLonStop);
 	        et[3] = (EditText) view.findViewById(R.id.etLatStop);
 
 	        // initialize state
@@ -145,9 +145,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 			        	et[1].clearFocus();
 			        	et[2].clearFocus();
 			        	et[3].clearFocus();
-			            bundle.putInt("startlong", Integer.parseInt(et[0].getText().toString()));
+			            bundle.putInt("startlon", Integer.parseInt(et[0].getText().toString()));
 			            bundle.putInt("startlat", Integer.parseInt(et[1].getText().toString()));
-			            bundle.putInt("stoplong", Integer.parseInt(et[2].getText().toString()));
+			            bundle.putInt("stoplon", Integer.parseInt(et[2].getText().toString()));
 			            bundle.putInt("stoplat", Integer.parseInt(et[3].getText().toString()));
 			            callback.onDialogSet(bundle);
 			        }
@@ -166,9 +166,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 	    @Override
 	    public Bundle onSaveInstanceState() {
 	        Bundle state = super.onSaveInstanceState();
-	        state.putString("startlong", et[0].getText().toString());
+	        state.putString("startlon", et[0].getText().toString());
 	        state.putString("startlat", et[1].getText().toString());
-	        state.putString("stoplong", et[2].getText().toString());
+	        state.putString("stoplon", et[2].getText().toString());
 	        state.putString("stoplat", et[3].getText().toString());
 	        return state;
 	    }
@@ -176,9 +176,9 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
 	    @Override
 	    public void onRestoreInstanceState(Bundle savedInstanceState) {
 	        super.onRestoreInstanceState(savedInstanceState);
-	        et[0].setText(savedInstanceState.getString("startlong"));
+	        et[0].setText(savedInstanceState.getString("startlon"));
 	        et[1].setText(savedInstanceState.getString("startlat"));
-	        et[2].setText(savedInstanceState.getString("stoplong"));
+	        et[2].setText(savedInstanceState.getString("stoplon"));
 	        et[3].setText(savedInstanceState.getString("stoplat"));
 	    }
 

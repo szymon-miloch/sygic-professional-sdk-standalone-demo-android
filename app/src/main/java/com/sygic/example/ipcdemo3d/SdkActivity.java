@@ -340,16 +340,16 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
      * These functions are defined in Activity because of exchanging data between Dialogs (Dialog Fragments) and Fragments.
      */
 	@Override
-	public void addItin(int startLong, int startLat, int stopLong, int stopLat) {
+	public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("itinStartLong", startLong);
+		editor.putInt("itinStartLon", startLon);
 		editor.putInt("itinStartLat", startLat);
-		editor.putInt("itinStopLong", stopLong);
+		editor.putInt("itinStopLon", stopLon);
 		editor.putInt("itinStopLat", stopLat);
 		editor.commit();
 		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addItin(startLong, startLat, stopLong, stopLat);
+		f.addItin(startLon, startLat, stopLon, stopLat);
 	}
 
 
@@ -383,20 +383,20 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
 	}
 
 	@Override
-	public void addVisibleViapoint(int viaLong, int viaLat) {
+	public void addVisibleViapoint(int viaLon, int viaLat) {
 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("itinViaLong", viaLong);
+		editor.putInt("itinViaLon", viaLon);
 		editor.putInt("itinViaLat", viaLat);
 		editor.commit();
 		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addVisibleViapoint(viaLong, viaLat);
+		f.addVisibleViapoint(viaLon, viaLat);
 	}
 
 	@Override
-	public void addInvisibleViapoint(int viaLong, int viaLat) {
+	public void addInvisibleViapoint(int viaLon, int viaLat) {
 		ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-		f.addInvisibleViapoint(viaLong, viaLat);
+		f.addInvisibleViapoint(viaLon, viaLat);
 	}
 
 

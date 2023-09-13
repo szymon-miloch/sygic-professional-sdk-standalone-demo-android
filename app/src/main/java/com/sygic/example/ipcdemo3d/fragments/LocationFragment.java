@@ -52,7 +52,7 @@ public class LocationFragment extends Fragment {
         registerFields(mRoot);
         
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-    	int coords[] = {sharedPref.getInt("locStopLong", 0), sharedPref.getInt("locStopLat", 0)};
+    	int coords[] = {sharedPref.getInt("locStopLon", 0), sharedPref.getInt("locStopLat", 0)};
     	String address = sharedPref.getString("locAddress", "");
         
         mPosX.setText(coords[0] == 0 ? "" : Integer.toString(coords[0]));
@@ -66,7 +66,7 @@ public class LocationFragment extends Fragment {
 	public void onDestroyView() {
     	SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("locStopLong", mPosX.getText().toString().equals("") ? 0 : Integer.parseInt(mPosX.getText().toString()));
+		editor.putInt("locStopLon", mPosX.getText().toString().equals("") ? 0 : Integer.parseInt(mPosX.getText().toString()));
 		editor.putInt("locStopLat", mPosY.getText().toString().equals("") ? 0 : Integer.parseInt(mPosY.getText().toString()));
 		editor.putString("locAddress", mAddress.getText().toString());
 		editor.commit();

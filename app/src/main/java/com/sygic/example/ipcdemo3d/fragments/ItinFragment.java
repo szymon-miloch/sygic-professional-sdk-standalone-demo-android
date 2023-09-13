@@ -52,11 +52,6 @@ public class ItinFragment extends Fragment {
         mActivity = (ActivityResolver)activity;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     /**
      * inflate the view for this fragment, register buttons, list view....
      *
@@ -101,7 +96,7 @@ public class ItinFragment extends Fragment {
             @Override
             public void onClick(View view) {
             	SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-            	int coords[] = {sharedPref.getInt("itinStartLong", 0), sharedPref.getInt("itinStartLat", 0), sharedPref.getInt("itinStopLong", 0), sharedPref.getInt("itinStopLat", 0)};
+            	int coords[] = {sharedPref.getInt("itinStartLon", 0), sharedPref.getInt("itinStartLat", 0), sharedPref.getInt("itinStopLon", 0), sharedPref.getInt("itinStopLat", 0)};
             	SetItineraryDialog itinDlg = SetItineraryDialog.newInstance("set itinerary test1 start/stop", coords);
             	itinDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
             }
@@ -125,7 +120,7 @@ public class ItinFragment extends Fragment {
             @Override
             public void onClick(View view) {
             	SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-            	int coords[] = {sharedPref.getInt("itinViaLong", 0), sharedPref.getInt("itinViaLat", 0)};
+            	int coords[] = {sharedPref.getInt("itinViaLon", 0), sharedPref.getInt("itinViaLat", 0)};
             	SetViapointDialog earthDlg = SetViapointDialog.newInstance("set waypoint", coords);
             	earthDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
             }
@@ -137,15 +132,15 @@ public class ItinFragment extends Fragment {
     /**
      * add itinerary test1
      *
-     * @param startLong 	itinerary start longtitude
+     * @param startLon 	itinerary start longtitude
      * @param startLat	 	itinerary start latitude
-     * @param stopLong 		itinerary stop longtitude
-     * @param stopLong 		itinerary stop latitude
+     * @param stopLon 		itinerary stop longtitude
+     * @param stopLat 		itinerary stop latitude
      */
-    public void addItin(int startLong, int startLat, int stopLong, int stopLat) {
+    public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
     	ArrayList<StopOffPoint> list = new ArrayList<StopOffPoint>();
-        list.add(new StopOffPoint(false, false, StopOffPoint.PointType.START, startLong, startLat, -1, 0, "", "", ""));
-        list.add(new StopOffPoint(false, false, StopOffPoint.PointType.FINISH, stopLong, stopLat, -1, 0, "", "", ""));
+        list.add(new StopOffPoint(false, false, StopOffPoint.PointType.START, startLon, startLat, -1, 0, "", "", ""));
+        list.add(new StopOffPoint(false, false, StopOffPoint.PointType.FINISH, stopLon, stopLat, -1, 0, "", "", ""));
         try {
             ApiItinerary.addItinerary(list, "test1", SdkApplication.MAX);
         } catch (GeneralException e) {
@@ -158,12 +153,12 @@ public class ItinFragment extends Fragment {
     /**
      * add visible viapoint to itinerary test1
      *
-     * @param viaLong 		itinerary waypoint longtitude
+     * @param viaLon 		itinerary waypoint longtitude
      * @param viaLat	 	itinerary waypoint latitude
      */
-    public void addVisibleViapoint(int viaLong, int viaLat) {
+    public void addVisibleViapoint(int viaLon, int viaLat) {
 		try {
-            StopOffPoint sop = new StopOffPoint(false, false, StopOffPoint.PointType.VIAPOINT, viaLong, viaLat, -1, 0, "", "", "");
+            StopOffPoint sop = new StopOffPoint(false, false, StopOffPoint.PointType.VIAPOINT, viaLon, viaLat, -1, 0, "", "", "");
             ApiItinerary.addEntryToItinerary("test1", sop, 1, SdkApplication.MAX);
         } catch (GeneralException e) {
             e.printStackTrace();
@@ -175,12 +170,12 @@ public class ItinFragment extends Fragment {
     /**
      * add invisible viapoint to itinerary test1
      *
-     * @param viaLong 		itinerary waypoint longtitude
+     * @param viaLon 		itinerary waypoint longtitude
      * @param viaLat	 	itinerary waypoint latitude
      */
-    public void addInvisibleViapoint(int viaLong, int viaLat) {
+    public void addInvisibleViapoint(int viaLon, int viaLat) {
 		try {
-            StopOffPoint sop = new StopOffPoint(false, false, StopOffPoint.PointType.INVISIBLE, viaLong, viaLat, -1, 0, "", "", "");
+            StopOffPoint sop = new StopOffPoint(false, false, StopOffPoint.PointType.INVISIBLE, viaLon, viaLat, -1, 0, "", "", "");
             ApiItinerary.addEntryToItinerary("test1", sop, 1, SdkApplication.MAX);
         } catch (GeneralException e) {
             e.printStackTrace();
