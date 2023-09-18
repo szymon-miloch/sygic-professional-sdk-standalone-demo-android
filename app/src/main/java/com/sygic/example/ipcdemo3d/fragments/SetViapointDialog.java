@@ -17,6 +17,7 @@ import android.widget.EditText;
 import androidx.fragment.app.DialogFragment;
 
 import com.sygic.example.ipcdemo3d.ActivityResolver;
+import com.sygic.example.ipcdemo3d.Constants;
 import com.sygic.example.ipcdemo3d.R;
 
 public class SetViapointDialog extends DialogFragment implements OnDialogSet {
@@ -38,8 +39,8 @@ public class SetViapointDialog extends DialogFragment implements OnDialogSet {
         SetViapointDialog frag = new SetViapointDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("startlon", coord[0] == 0 ? "" : Integer.toString(coord[0]));
-        args.putString("startlat", coord[1] == 0 ? "" : Integer.toString(coord[1]));
+        args.putString(Constants.START_LON, coord[0] == 0 ? "" : Integer.toString(coord[0]));
+        args.putString(Constants.START_LAT, coord[1] == 0 ? "" : Integer.toString(coord[1]));
         frag.setArguments(args);
 
         return frag;
@@ -54,8 +55,8 @@ public class SetViapointDialog extends DialogFragment implements OnDialogSet {
     @Override
     public void onDialogSet(Bundle bundle) {
         int[] outCoord = new int[4];
-        outCoord[0] = bundle.getInt("startlon");
-        outCoord[1] = bundle.getInt("startlat");
+        outCoord[0] = bundle.getInt(Constants.START_LON);
+        outCoord[1] = bundle.getInt(Constants.START_LAT);
         boolean visible = bundle.getBoolean("visible");
 
         if (visible) {
@@ -94,8 +95,8 @@ public class SetViapointDialog extends DialogFragment implements OnDialogSet {
             callback = callBack;
             String title = args.getString("title");
             String[] init = new String[2];
-            init[0] = args.getString("startlon");
-            init[1] = args.getString("startlat");
+            init[0] = args.getString(Constants.START_LON);
+            init[1] = args.getString(Constants.START_LAT);
 
             setCanceledOnTouchOutside(false);
             setIcon(0);
@@ -128,8 +129,8 @@ public class SetViapointDialog extends DialogFragment implements OnDialogSet {
                 if (callback != null) {
                     et[0].clearFocus();
                     et[1].clearFocus();
-                    bundle.putInt("startlon", Integer.parseInt(et[0].getText().toString()));
-                    bundle.putInt("startlat", Integer.parseInt(et[1].getText().toString()));
+                    bundle.putInt(Constants.START_LON, Integer.parseInt(et[0].getText().toString()));
+                    bundle.putInt(Constants.START_LAT, Integer.parseInt(et[1].getText().toString()));
                     bundle.putBoolean("visible", cb.isChecked());
                     callback.onDialogSet(bundle);
                 }
@@ -142,16 +143,16 @@ public class SetViapointDialog extends DialogFragment implements OnDialogSet {
         @Override
         public Bundle onSaveInstanceState() {
             Bundle state = super.onSaveInstanceState();
-            state.putString("startlon", et[0].getText().toString());
-            state.putString("startlat", et[1].getText().toString());
+            state.putString(Constants.START_LON, et[0].getText().toString());
+            state.putString(Constants.START_LAT, et[1].getText().toString());
             return state;
         }
 
         @Override
         public void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
-            et[0].setText(savedInstanceState.getString("startlon"));
-            et[1].setText(savedInstanceState.getString("startlat"));
+            et[0].setText(savedInstanceState.getString(Constants.START_LON));
+            et[1].setText(savedInstanceState.getString(Constants.START_LAT));
         }
 
 

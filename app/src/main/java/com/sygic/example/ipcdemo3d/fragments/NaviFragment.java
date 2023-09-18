@@ -72,7 +72,7 @@ public class NaviFragment extends Fragment {
     private void populateSpinnerAdapter(ArrayAdapter<String> spinnerAdapter, List<String> items) {
         spinnerAdapter.clear();
         if (items != null && !items.isEmpty()) {
-            Collections.sort(items, (lhs, rhs) -> lhs.compareToIgnoreCase(rhs));
+            Collections.sort(items, String::compareToIgnoreCase);
             for (String dir : items) {
                 spinnerAdapter.add(dir);
             }

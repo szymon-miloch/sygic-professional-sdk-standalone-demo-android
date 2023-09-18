@@ -10,7 +10,7 @@ public interface ActivityResolver {
 
     void setTabsState(boolean enabled);
 
-    void addItin(int startLon, int startLat, int stopLon, int stopLat);
+    void addItinerary(int startLon, int startLat, int stopLon, int stopLat);
 
     void addVisibleViapoint(int startLon, int startLat);
 

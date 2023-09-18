@@ -82,12 +82,10 @@ public class RouteFragment extends Fragment {
         mListAdapter.clear();
         try {
             ArrayList<StopOffPoint> itinerary = ApiItinerary.getItineraryList("default", SdkApplication.MAX);
-            if (itinerary != null) {
-                for (StopOffPoint p : itinerary) {
-                    String str = p.isVisited() ? "V  " : "U  ";
-                    str += p.getCaption() != null ? p.getCaption() : p.getAddress();
-                    mListAdapter.add(str);
-                }
+            for (StopOffPoint p : itinerary) {
+                String str = p.isVisited() ? "V  " : "U  ";
+                str += p.getCaption() != null ? p.getCaption() : p.getAddress();
+                mListAdapter.add(str);
             }
         } catch (GeneralException e) {
             e.printStackTrace();

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import androidx.fragment.app.DialogFragment;
 
 import com.sygic.example.ipcdemo3d.ActivityResolver;
+import com.sygic.example.ipcdemo3d.Constants;
 import com.sygic.example.ipcdemo3d.R;
 
 public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
@@ -37,10 +38,10 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
         SetItineraryDialog frag = new SetItineraryDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("startlon", coord[0] == 0 ? "" : Integer.toString(coord[0]));
-        args.putString("startlat", coord[1] == 0 ? "" : Integer.toString(coord[1]));
-        args.putString("stoplon", coord[2] == 0 ? "" : Integer.toString(coord[2]));
-        args.putString("stoplat", coord[3] == 0 ? "" : Integer.toString(coord[3]));
+        args.putString(Constants.START_LON, coord[0] == 0 ? "" : Integer.toString(coord[0]));
+        args.putString(Constants.START_LAT, coord[1] == 0 ? "" : Integer.toString(coord[1]));
+        args.putString(Constants.STOP_LON, coord[2] == 0 ? "" : Integer.toString(coord[2]));
+        args.putString(Constants.STOP_LAT, coord[3] == 0 ? "" : Integer.toString(coord[3]));
         frag.setArguments(args);
 
 
@@ -56,12 +57,12 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
     @Override
     public void onDialogSet(Bundle bundle) {
         int[] outCoord = new int[4];
-        outCoord[0] = bundle.getInt("startlon");
-        outCoord[1] = bundle.getInt("startlat");
-        outCoord[2] = bundle.getInt("stoplon");
-        outCoord[3] = bundle.getInt("stoplat");
+        outCoord[0] = bundle.getInt(Constants.START_LON);
+        outCoord[1] = bundle.getInt(Constants.START_LAT);
+        outCoord[2] = bundle.getInt(Constants.STOP_LON);
+        outCoord[3] = bundle.getInt(Constants.STOP_LAT);
 
-        callback.addItin(outCoord[0], outCoord[1], outCoord[2], outCoord[3]);
+        callback.addItinerary(outCoord[0], outCoord[1], outCoord[2], outCoord[3]);
         dismiss();
     }
 
@@ -93,10 +94,10 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
             callback = callBack;
             String title = args.getString("title");
             String[] init = new String[4];
-            init[0] = args.getString("startlon");
-            init[1] = args.getString("startlat");
-            init[2] = args.getString("stoplon");
-            init[3] = args.getString("stoplat");
+            init[0] = args.getString(Constants.START_LON);
+            init[1] = args.getString(Constants.START_LAT);
+            init[2] = args.getString(Constants.STOP_LON);
+            init[3] = args.getString(Constants.STOP_LAT);
 
             setCanceledOnTouchOutside(false);
             setIcon(0);
@@ -142,10 +143,10 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
                     et[1].clearFocus();
                     et[2].clearFocus();
                     et[3].clearFocus();
-                    bundle.putInt("startlon", Integer.parseInt(et[0].getText().toString()));
-                    bundle.putInt("startlat", Integer.parseInt(et[1].getText().toString()));
-                    bundle.putInt("stoplon", Integer.parseInt(et[2].getText().toString()));
-                    bundle.putInt("stoplat", Integer.parseInt(et[3].getText().toString()));
+                    bundle.putInt(Constants.START_LON, Integer.parseInt(et[0].getText().toString()));
+                    bundle.putInt(Constants.START_LAT, Integer.parseInt(et[1].getText().toString()));
+                    bundle.putInt(Constants.STOP_LON, Integer.parseInt(et[2].getText().toString()));
+                    bundle.putInt(Constants.STOP_LAT, Integer.parseInt(et[3].getText().toString()));
                     callback.onDialogSet(bundle);
                 }
             });
@@ -157,20 +158,20 @@ public class SetItineraryDialog extends DialogFragment implements OnDialogSet {
         @Override
         public Bundle onSaveInstanceState() {
             Bundle state = super.onSaveInstanceState();
-            state.putString("startlon", et[0].getText().toString());
-            state.putString("startlat", et[1].getText().toString());
-            state.putString("stoplon", et[2].getText().toString());
-            state.putString("stoplat", et[3].getText().toString());
+            state.putString(Constants.START_LON, et[0].getText().toString());
+            state.putString(Constants.START_LAT, et[1].getText().toString());
+            state.putString(Constants.STOP_LON, et[2].getText().toString());
+            state.putString(Constants.STOP_LAT, et[3].getText().toString());
             return state;
         }
 
         @Override
         public void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
-            et[0].setText(savedInstanceState.getString("startlon"));
-            et[1].setText(savedInstanceState.getString("startlat"));
-            et[2].setText(savedInstanceState.getString("stoplon"));
-            et[3].setText(savedInstanceState.getString("stoplat"));
+            et[0].setText(savedInstanceState.getString(Constants.START_LON));
+            et[1].setText(savedInstanceState.getString(Constants.START_LAT));
+            et[2].setText(savedInstanceState.getString(Constants.STOP_LON));
+            et[3].setText(savedInstanceState.getString(Constants.STOP_LAT));
         }
 
     }

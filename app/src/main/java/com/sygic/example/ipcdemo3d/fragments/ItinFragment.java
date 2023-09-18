@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.sygic.example.ipcdemo3d.Constants;
 import com.sygic.example.ipcdemo3d.R;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.ApiItinerary;
@@ -30,7 +30,6 @@ import java.util.List;
  */
 public class ItinFragment extends Fragment {
     private ArrayAdapter<String> mListAdapter;
-    private Spinner mSpin;
 
     private static class ViewHolder {
         int pos;
@@ -80,7 +79,12 @@ public class ItinFragment extends Fragment {
         Button btnAdd = (Button) rootView.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(view -> {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-            int[] coords = {sharedPref.getInt("itinStartLon", 0), sharedPref.getInt("itinStartLat", 0), sharedPref.getInt("itinStopLon", 0), sharedPref.getInt("itinStopLat", 0)};
+            int[] coords = {
+                    sharedPref.getInt(Constants.INIT_START_LON, 0),
+                    sharedPref.getInt(Constants.INIT_START_LAT, 0),
+                    sharedPref.getInt(Constants.INIT_STOP_LON, 0),
+                    sharedPref.getInt(Constants.INIT_STOP_LAT, 0)
+            };
             SetItineraryDialog itinDlg = SetItineraryDialog.newInstance("set itinerary test1 start/stop", coords);
             itinDlg.show(ItinFragment.this.getChildFragmentManager(), "SetItineraryDialog");
         });
@@ -113,7 +117,7 @@ public class ItinFragment extends Fragment {
      * @param stopLon  itinerary stop longtitude
      * @param stopLat  itinerary stop latitude
      */
-    public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
+    public void addItinerary(int startLon, int startLat, int stopLon, int stopLat) {
         ArrayList<StopOffPoint> list = new ArrayList<>();
         list.add(new StopOffPoint(false, false, StopOffPoint.PointType.START, startLon, startLat, -1, 0, "", "", ""));
         list.add(new StopOffPoint(false, false, StopOffPoint.PointType.FINISH, stopLon, stopLat, -1, 0, "", "", ""));
@@ -174,13 +178,11 @@ public class ItinFragment extends Fragment {
             Fragment f = new PointInfoFragment();
             Bundle b = new Bundle();
             b.putInt("position", i);
-            b.putString("name", (String) mSpin.getSelectedItem());
             f.setArguments(b);
             getFragmentManager().beginTransaction().add(ItinFragment.this.getId(), f)
                     .addToBackStack(null).hide(ItinFragment.this).commit();
         });
         refreshList("test1");
-
     }
 
 
@@ -193,11 +195,9 @@ public class ItinFragment extends Fragment {
         mListAdapter.clear();
         try {
             ArrayList<StopOffPoint> mItinerary = ApiItinerary.getItineraryList(name, SdkApplication.MAX);
-            if (mItinerary != null) {
-                for (StopOffPoint p : mItinerary) {
-                    String str = (p.getCaption() != null || p.getCaption() != "") ? p.getCaption() : p.getAddress();
-                    mListAdapter.add(str);
-                }
+            for (StopOffPoint p : mItinerary) {
+                String str = (p.getCaption() != null || p.getCaption() != "") ? p.getCaption() : p.getAddress();
+                mListAdapter.add(str);
             }
         } catch (GeneralException e) {
             e.printStackTrace();

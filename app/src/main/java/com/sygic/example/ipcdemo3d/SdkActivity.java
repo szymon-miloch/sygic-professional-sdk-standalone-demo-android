@@ -112,15 +112,6 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
 
 
     /**
-     * stop the receiver
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-
-    /**
      * start the receiver, reconnect if necessary
      */
     @Override
@@ -329,18 +320,20 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
      * These functions are defined in Activity because of exchanging data between Dialogs (Dialog Fragments) and Fragments.
      */
     @Override
-    public void addItin(int startLon, int startLat, int stopLon, int stopLat) {
+    public void addItinerary(int startLon, int startLat, int stopLon, int stopLat) {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("itinStartLon", startLon);
-        editor.putInt("itinStartLat", startLat);
-        editor.putInt("itinStopLon", stopLon);
-        editor.putInt("itinStopLat", stopLat);
+        editor.putInt(Constants.INIT_START_LON, startLon);
+        editor.putInt(Constants.INIT_START_LAT, startLat);
+        editor.putInt(Constants.INIT_STOP_LON, stopLon);
+        editor.putInt(Constants.INIT_STOP_LAT, stopLat);
         editor.commit();
+
         ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
-        f.addItin(startLon, startLat, stopLon, stopLat);
+        f.addItinerary(startLon, startLat, stopLon, stopLat);
     }
 
+    @Override
     public ApiCallback getApiCallback() {
         return mApiCallback;
     }
@@ -353,6 +346,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         AlarmManager am = (AlarmManager) (getSystemService(Context.ALARM_SERVICE));
         Intent amIntent = new Intent(this, StateChangeReceiver.class);
         amIntent.setAction(SdkApplication.INTENT_ACTION_AM_WAKEUP);
+
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, amIntent, PendingIntent.FLAG_IMMUTABLE);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + millis, pi);
     }
@@ -364,6 +358,7 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         editor.putInt("itinViaLon", viaLon);
         editor.putInt("itinViaLat", viaLat);
         editor.commit();
+
         ItinFragment f = (ItinFragment) getSupportFragmentManager().findFragmentByTag(sMenu[ITIN_MENU_INDEX]);
         f.addVisibleViapoint(viaLon, viaLat);
     }
