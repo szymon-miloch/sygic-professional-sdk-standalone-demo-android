@@ -1,0 +1,46 @@
+<resources>
+    <string-array name="event_descs">
+        <item>Navigation has started</item>
+        <item>Route has been cancelled.</item>
+        <item>Waypoint has been visited.</item>
+        <item>The end of the route has been reached.</item>
+        <item>The route has been computed.</item>
+        <item>Off route.</item>
+        <item>The application has exited.</item>
+        <item>The menu is shown.</item>
+        <item>Tha context menu is shown.</item>
+        <item>The menu has been closed.</item>
+        <item>Custom menu command:</item>
+        <item>The language has been changed to:</item>
+        <item>The orientation has been changed.</item>
+        <item>Radar warning:</item>
+        <item>POI warning:</item>
+        <item>Geofence has been reached:</item>
+        <item>The border has been crossed.</item>
+        <item>The current speed limit has been exceeded</item>
+        <item>The bitmap has been clicked.</item>
+        <item>The poi has been clicked</item>
+    </string-array>
+    <integer-array name="event_ids">
+        <item>1010</item>
+        <item>1101</item>
+        <item>1102</item>
+        <item>1103</item>
+        <item>1105</item>
+        <item>1106</item>
+        <item>1100</item>
+        <item>1150</item>
+        <item>1151</item>
+        <item>1152</item>
+        <item>1153</item>
+        <item>1160</item>
+        <item>1161</item>
+        <item>1170</item>
+        <item>1171</item>
+        <item>1172</item>
+        <item>1180</item>
+        <item>1181</item>
+        <item>1190</item>
+        <item>1191</item>
+    </integer-array>
+</resources>

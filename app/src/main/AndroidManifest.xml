@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sygic.example.ipcdemo3d"
+    android:versionCode="3"
+    android:versionName="3.1">
+
+    <queries>
+        <package android:name="com.sygic.truck" />
+        <package android:name="com.sygic.fleet" />
+    </queries>
+
+    <application
+        android:name="com.sygic.example.ipcdemo3d.SdkApplication"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.sygic.example.ipcdemo3d.SdkActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustPan"
+            android:clearTaskOnLaunch="true"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.sygic.example.ipcdemo3d.StateChangeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.sygic.intent.action.app_started" />
+                <action android:name="com.sygic.intent.action.am_wakeup" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

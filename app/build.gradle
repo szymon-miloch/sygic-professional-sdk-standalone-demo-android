@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
+
+    defaultConfig {
+        applicationId "com.sygic.example.ipcdemo3d"
+        minSdkVersion 21
+        targetSdkVersion 33
+    }
+
+    def DIM_PACKAGE = "NaviPackage"
+    flavorDimensions DIM_PACKAGE
+
+    productFlavors {
+        truck {
+            dimension DIM_PACKAGE
+            buildConfigField "String", "NAVI_PACKAGE", "\"com.sygic.truck\""
+        }
+
+        fleet {
+            dimension DIM_PACKAGE
+            buildConfigField "String", "NAVI_PACKAGE", "\"com.sygic.fleet\""
+        }
+    }
+
+    signingConfigs {
+        release {
+            Properties localProp = new Properties()
+            localProp.load(project.rootProject.file('local.properties').newDataInputStream())
+            def keystoreSett = localProp.getProperty('keystore.settings', null)
+            if (keystoreSett != null) {
+                File signFile = file(keystoreSett)
+                if (signFile.exists()) {
+                    Properties properties = new Properties()
+                    properties.load(signFile.newDataInputStream())
+
+                    storeFile file(properties.getProperty('key.store', null))
+                    storePassword properties.getProperty('key.store.password', null)
+                    keyAlias properties.getProperty('key.alias', null)
+                    keyPassword properties.getProperty('key.alias.password', null)
+                } else {
+                    logger.warn("File " + signFile + " does not exist. App will not be signed.")
+                }
+            } else {
+                logger.warn("keystore.settings file not defined in local.properties. App will not be signed.")
+            }
+        } // release
+    } // signingConfigs
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "com.sygic.fleet:remote-api:6.0.0"
+}

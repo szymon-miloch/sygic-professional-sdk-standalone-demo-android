@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:baselineAligned="false">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvLabAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address:"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvLabISO"
+            android:layout_below="@+id/tvLabAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ISO:"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvLabPosition"
+            android:layout_below="@+id/tvLabISO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Position:"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvLabOffset"
+            android:layout_below="@+id/tvLabPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offset:"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvLabPointType"
+            android:layout_below="@+id/tvLabOffset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Point type:"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_toRightOf="@+id/tvLabAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvISO"
+            android:layout_below="@+id/tvAddress"
+            android:layout_toRightOf="@+id/tvLabISO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvPosition"
+            android:layout_below="@+id/tvLabISO"
+            android:layout_toRightOf="@+id/tvLabPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvOffset"
+            android:layout_below="@+id/tvPosition"
+            android:layout_toRightOf="@+id/tvLabOffset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvPointType"
+            android:layout_below="@+id/tvOffset"
+            android:layout_toRightOf="@+id/tvLabPointType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+</LinearLayout>
