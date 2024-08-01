@@ -1,13 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "33.0.2"
+    namespace = "com.sygic.example.ipcdemo3d"
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sygic.example.ipcdemo3d"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
+    }
+
+    buildFeatures {
+        buildConfig=true
     }
 
     def DIM_PACKAGE = "NaviPackage"

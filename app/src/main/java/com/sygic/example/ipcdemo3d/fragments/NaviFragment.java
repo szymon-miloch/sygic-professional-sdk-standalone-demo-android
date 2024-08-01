@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -99,7 +100,11 @@ public class NaviFragment extends Fragment {
     public void onResume() {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter(SdkApplication.INTENT_CHANGE_STATE);
-        getActivity().registerReceiver(mChangeReceiver, intentFilter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            getActivity().registerReceiver(mChangeReceiver, intentFilter, Context.RECEIVER_EXPORTED);
+        } else {
+            getActivity().registerReceiver(mChangeReceiver, intentFilter);
+        }
         refreshState(activity.isAppStarted(SdkApplication.MAX), activity.isServiceConnected());
     }
 
