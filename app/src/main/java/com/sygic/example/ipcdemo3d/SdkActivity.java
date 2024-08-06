@@ -96,7 +96,8 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         mApiCallback = new DemoApiCallback();
 
         // set the correct binding based on your installed navigation version
-        Api.init(getApplicationContext(), BuildConfig.NAVI_PACKAGE, Api.CLASS_TRUCK, mApiCallback);
+        String apiClass = (BuildConfig.FLAVOR == "fleet")?  Api.CLASS_FLEET : Api.CLASS_TRUCK;
+        Api.init(getApplicationContext(), BuildConfig.NAVI_PACKAGE, apiClass, mApiCallback);
     }
 
 
