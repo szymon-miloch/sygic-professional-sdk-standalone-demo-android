@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -84,13 +85,19 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
         mFilter.addAction(SdkApplication.INTENT_ACTION_APP_STARTED);
         mFilter.addAction(SdkApplication.INTENT_ACTION_AM_WAKEUP);
         mReceiver = new ActivityReceiver();
-        registerReceiver(mReceiver, mFilter);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            registerReceiver(mReceiver, mFilter, Context.RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(mReceiver, mFilter);
+        }
 
         //create a new Api Callback
         mApiCallback = new DemoApiCallback();
 
         // set the correct binding based on your installed navigation version
-        Api.init(getApplicationContext(), BuildConfig.NAVI_PACKAGE, Api.CLASS_TRUCK, mApiCallback);
+        String apiClass = (BuildConfig.FLAVOR == "fleet")?  Api.CLASS_FLEET : Api.CLASS_TRUCK;
+        Api.init(getApplicationContext(), BuildConfig.NAVI_PACKAGE, apiClass, mApiCallback);
     }
 
 
