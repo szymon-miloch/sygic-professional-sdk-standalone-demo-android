@@ -4,11 +4,6 @@
     android:versionCode="3"
     android:versionName="3.1">
 
-    <queries>
-        <package android:name="com.sygic.truck" />
-        <package android:name="com.sygic.fleet" />
-    </queries>
-
     <application
         android:name="com.sygic.example.ipcdemo3d.SdkApplication"
         android:icon="@drawable/icon"
