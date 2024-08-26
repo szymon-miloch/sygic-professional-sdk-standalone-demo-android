@@ -69,5 +69,5 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "com.sygic.fleet:remote-api:6.1.2"
+    implementation "com.sygic.fleet:remote-api:6.2.0"
 }
