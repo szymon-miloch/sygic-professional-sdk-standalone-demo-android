@@ -129,5 +129,15 @@
             android:layout_below="@+id/lin_layout"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <TextView
+            android:id="@+id/tv7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="292dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </RelativeLayout>
 </ScrollView>

@@ -23,6 +23,7 @@ import com.sygic.example.ipcdemo3d.fragments.ItinFragment;
 import com.sygic.example.ipcdemo3d.fragments.LocationFragment;
 import com.sygic.example.ipcdemo3d.fragments.NaviFragment;
 import com.sygic.example.ipcdemo3d.fragments.PoisFragment;
+import com.sygic.example.ipcdemo3d.fragments.UpdatePoisFragment;
 import com.sygic.example.ipcdemo3d.fragments.RouteFragment;
 import com.sygic.example.ipcdemo3d.fragments.RouteInfoFragment;
 import com.sygic.example.ipcdemo3d.fragments.SearchFragment;
@@ -200,6 +201,8 @@ public class SdkActivity extends FragmentActivity implements ActivityResolver {
                 RouteFragment.class, null);
         mTabManager.addTab(mTabHost.newTabSpec(sMenu[n]).setIndicator(sMenu[n++]),
                 PoisFragment.class, null);
+        mTabManager.addTab(mTabHost.newTabSpec(sMenu[n]).setIndicator(sMenu[n++]),
+                UpdatePoisFragment.class, null);
         mTabManager.addTab(mTabHost.newTabSpec(sMenu[n]).setIndicator(sMenu[n++]),
                 LocationFragment.class, null);
         mTabManager.addTab(mTabHost.newTabSpec(sMenu[n]).setIndicator(sMenu[n++]),

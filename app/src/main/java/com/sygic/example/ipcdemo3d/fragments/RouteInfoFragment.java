@@ -80,6 +80,8 @@ public class RouteInfoFragment extends Fragment {
             if (info != null) {
                 fillInfo(info);
             }
+            TextView tv = (TextView) mRoot.findViewById(R.id.tv7);
+            tv.setText(/*R.string.none*/"None" + info.getStatus() + "\n\n" + ApiNavigation.getRouteStatus(0));
         } catch (GeneralException e) {
             e.printStackTrace();
         }
