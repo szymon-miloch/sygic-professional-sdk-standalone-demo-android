@@ -38,19 +38,10 @@ import java.util.Collections;
 public class UpdatePoisFragment extends Fragment {
     private SdkActivity mActivity;
 
-    public UpdatePoisFragment() {
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = (SdkActivity) activity;
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
     }
 
@@ -79,10 +70,9 @@ public class UpdatePoisFragment extends Fragment {
                 EditText tv = (EditText) rootView.findViewById(R.id.edit_updateCmd);
                 String update = tv.getText().toString();
 
-                ApiPoi.updatePois(update, ApiPoi.FORMAT_TEXT, 1000 );
+                ApiPoi.updatePois(update, ApiPoi.FORMAT_TEXT, 1000);
 
-            } catch ( GeneralException e )
-            {
+            } catch (GeneralException e) {
                 Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
