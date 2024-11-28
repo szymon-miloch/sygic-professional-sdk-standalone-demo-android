@@ -1,5 +1,7 @@
 package com.sygic.example.ipcdemo3d.fragments;
 
+import static com.sygic.example.ipcdemo3d.fragments.JsonSamples.GdanskGdyniaJson;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +35,17 @@ import com.sygic.example.ipcdemo3d.SdkActivity;
 import com.sygic.example.ipcdemo3d.SdkApplication;
 import com.sygic.sdk.remoteapi.Api;
 import com.sygic.sdk.remoteapi.ApiDialog;
+import com.sygic.sdk.remoteapi.ApiNavigation;
 import com.sygic.sdk.remoteapi.ApiOptions;
 import com.sygic.sdk.remoteapi.exception.GeneralException;
+import com.sygic.sdk.remoteapi.exception.LoadRouteException;
 import com.sygic.sdk.remoteapi.model.NaviVersion;
 import com.sygic.sdk.remoteapi.model.Options;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -190,8 +198,26 @@ public class NaviFragment extends Fragment {
         btnStartForeg.setOnClickListener(v -> {
             try {
                 Api.getInstance().show(false);
+
+                String str = GdanskGdyniaJson;
+                InputStream is = new ByteArrayInputStream(str.getBytes());
+                byte[] buffer = new byte[5000];
+                if (is.read(buffer) == -1)
+                    return;
+                String base64 = Base64.encodeToString(buffer, Base64.DEFAULT);
+                is.close();
+                boolean append = false;
+                String destFileName = "Res/itinerary/route3.json";
+                String filepath = Api.importFile(base64, destFileName, append);
+
+                ApiNavigation.loadComputedRoute(filepath, 0);
+
             } catch (RemoteException e) {
                 e.printStackTrace();
+            } catch (LoadRouteException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             refreshState(activity.isAppStarted(SdkApplication.MAX), activity.isServiceConnected());
         });
